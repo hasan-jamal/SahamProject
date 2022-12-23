@@ -49,7 +49,6 @@ namespace SahamProject.Web.Models
 
             modelBuilder.Entity<Customer>(entity =>
             {
-
                 entity.Property(e => e.Area).HasMaxLength(50);
 
                 entity.Property(e => e.BuildingNumber).HasMaxLength(50);
@@ -73,7 +72,6 @@ namespace SahamProject.Web.Models
 
             modelBuilder.Entity<Merchant>(entity =>
             {
-
                 entity.Property(e => e.Email)
                     .HasMaxLength(50)
                     .HasColumnName("email");
@@ -95,26 +93,28 @@ namespace SahamProject.Web.Models
 
             modelBuilder.Entity<Service>(entity =>
             {
+                entity.HasNoKey();
+
                 entity.Property(e => e.Description).HasMaxLength(1000);
+
+                entity.Property(e => e.Id).HasMaxLength(50);
 
                 entity.Property(e => e.ImageUrl).HasMaxLength(100);
 
-                entity.Property(e => e.Name).HasMaxLength(50);
+                entity.Property(e => e.Name)
+                    .HasMaxLength(50)
+                    .IsFixedLength();
             });
 
             modelBuilder.Entity<Shipment>(entity =>
             {
                 entity.ToTable("Shipment");
 
-                entity.Property(e => e.CustomerId).HasMaxLength(50);
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.MerchanId).HasMaxLength(50);
-
-                entity.Property(e => e.OrderNumber);
+                entity.Property(e => e.OrderNumber).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.ShipmentTypeId).HasMaxLength(50);
-
-                entity.Property(e => e.StatusId).HasMaxLength(50);
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Shipments)
@@ -134,14 +134,11 @@ namespace SahamProject.Web.Models
 
             modelBuilder.Entity<ShipmentsProduct>(entity =>
             {
-
                 entity.Property(e => e.Description).HasMaxLength(200);
 
                 entity.Property(e => e.Height).HasMaxLength(50);
 
                 entity.Property(e => e.Length).HasMaxLength(50);
-
-                entity.Property(e => e.ShipmentId).HasMaxLength(50);
 
                 entity.Property(e => e.Weight).HasMaxLength(50);
 

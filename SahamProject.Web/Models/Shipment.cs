@@ -10,12 +10,12 @@ namespace SahamProject.Web.Models
             ShipmentsProducts = new HashSet<ShipmentsProduct>();
         }
 
-        public string Id { get; set; } = null!;
+        public int Id { get; set; }
         public double? Price { get; set; }
-        public string? MerchanId { get; set; }
+        public int? MerchanId { get; set; }
         public int OrderNumber { get; set; }
-        public string? CustomerId { get; set; }
-        public string? StatusId { get; set; }
+        public int? CustomerId { get; set; }
+        public int? StatusId { get; set; }
         public string? ShipmentTypeId { get; set; }
 
         public virtual Customer? Customer { get; set; }
