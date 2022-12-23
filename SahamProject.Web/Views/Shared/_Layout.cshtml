@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"] - Saham</title>
+    <link rel="icon" href="~/assets/images/logo.png">
+    <!---Style CSS--->
+    <link rel="stylesheet" href="~/assets/css/style.css">
+    <!---Bootstrap 4 CSS--->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <!--FontAwosome  CSS---->
+    <link rel="stylesheet" href="~/assets/lib/fontawosome/all.min.css">
+    <link rel="stylesheet" href="~/assets/lib/fontawosome/light.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <!--Fonts--->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="~/SahamProject.Web.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+         <a href="" class="btn-whatsup"><i class="fab fa-whatsapp"></i>كيف يمكنني مساعدتك ؟ </a>
+
+        <nav class="navbar">
+            <div class="logo"><img src="~/assets/images/logo.png" alt="LOGO">
+            </div>
+            <div class="push-left">
+
+                <button id="menu-toggler" data-class="menu-active" class="hamburger">
+                    <span class="hamburger-line hamburger-line-top"></span>
+                    <span class="hamburger-line hamburger-line-middle"></span>
+                    <span class="hamburger-line hamburger-line-bottom"></span>
+                </button>
+
+                <!--  Menu compatible with wp_nav_menu  -->
+                <ul id="primary-menu" class="menu nav-menu">
+                    <li class="menu-item current-menu-item"><a class="nav__link" asp-controller="Home" asp-action="Index">About Saham</a></li>
+                    <li class="menu-item current-menu-item"><a class="nav__link" asp-controller="Home" asp-action="Index">Our Services</a></li>
+                    <li class="menu-item current-menu-item"><a class="nav__link" asp-controller="Contacts" asp-action="Create">Contact Us</a></li>
+                    <li class="menu-item current-menu-item"><a class="nav__link" asp-controller="Home" asp-action="Index">Track Shippment</a></li>
+                    <li class="menu-item current-menu-item"><a class="nav__link" asp-controller="Account" asp-action="Index">Sign in</a></li>
+
+                </ul>
+
+            </div>
+        </nav>
+    </header>
+ 
+        <main>
+            @RenderBody()
+        </main>
+
+
+   <footer>
+        <div class="container">
+            <div class="d-flex align-items-center flex-footer  justify-content-between">
+                <a href="#!"><img src="./images/logo.png" alt=""></a>
+                <h1>Saham Application</h1>
+            </div>
+            <div class="d-flex align-items-center footer-flex">
+                <span>جميع الحقوق محفوظة ©Saham</span>
+                <a href=""></a>
+            </div>
+        </div>
+
+
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/js/index.js"></script>
+    <!--Navbar JS--->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="~/assets/js/navbar.js"></script>
+    <!--FontAwosome  JS---->
+    <script src="~/assets/lib/fontawosome/all.min.js"></script>
+    <script src="~/assets/lib/fontawosome/light.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

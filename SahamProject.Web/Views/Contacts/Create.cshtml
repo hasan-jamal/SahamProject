@@ -1,0 +1,101 @@
+﻿@model Contact 
+
+  <section class="section-contact">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="contact">
+                            <h1>Contact Us</h1>
+                            <div class="d-flex align-items-center">
+                                <i class="far fa-phone-alt"></i>
+                                <div>
+                                    <h3>Phone :</h3>
+                                    <p>+970595488660</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="far fa-envelope"></i>
+                                <div>
+                                    <h3>Email :</h3>
+                                    <p>test@info.gmail.com</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-lg-offset-2">
+                        <form id="contact-form" method="post"role="form">
+                            <div class="messages"></div>
+                            <div class="controls">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group my-3">
+                                            <label for="form_name" >Firstname *</label>
+                                            <input id="form_name" asp-for="FirstName" type="text" name="FirstName" class="form-control"
+                                                placeholder="Please enter your firstname *" required="required"
+                                                data-error="Firstname is required.">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group my-3">
+                                            <label for="form_lastname">Lastname *</label>
+                                            <input id="form_lastname" asp-for="LastName" type="text" name="LastName" class="form-control"
+                                                placeholder="Please enter your lastname *" required="required"
+                                                data-error="Lastname is required.">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group my-3">
+                                            <label for="form_email">Email *</label>
+                                            <input id="form_email" asp-for="Email" type="email" name="email" class="form-control"
+                                                placeholder="Please enter your email *" required="required"
+                                                data-error="Valid email is required.">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group my-3">
+                                            <label for="form_phone">Phone</label>
+                                            <input id="form_phone" asp-for="Phone" type="tel" name="phone" class="form-control"
+                                                placeholder="Please enter your phone">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group my-3">
+                                            <label for="form_message">Message *</label>
+                                            <textarea id="form_message" asp-for="Message" name="message" class="form-control"
+                                                placeholder="Message for me *" rows="4" required
+                                                data-error="Please,leave us a message."></textarea>
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <input type="submit" class="btn btn-success btn-send" value="Send message">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+        </section>
+
+
+
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial.cshtml" />
+    }
+}

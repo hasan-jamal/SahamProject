@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Contact>
+
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-12">
+            <h1 class="text-primary">Contacts List</h1>
+        </div>
+       
+    </div>
+
+
+<br />
+<br />
+
+<table class="table table-hover table-bordered text-center">
+
+    <thead>
+        <tr>
+            <th>
+                First Name
+            </th>
+            <th>
+                Last Name
+            </th>
+             <th>
+                Email Address
+            </th>
+           <th>
+                Phone
+            </th>
+             <th>
+                Message
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var obj in Model)
+        {
+        <tr>
+            <td>
+                @obj.FirstName
+            </td>
+              <td>
+                @obj.LastName
+            </td>
+              <td>
+                @obj.Email
+            </td>
+              <td>
+                @obj.Phone
+            </td>
+              <td>
+                @obj.Message
+            </td>
+            <td>
+                <a class="btn-danger btn" asp-action="Delete" asp-route-id="@obj.Id"><i class="bi bi-trash3"></i></a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+</div>
