@@ -9,6 +9,7 @@ namespace SahamProject.Web.DataAccess.IRepository
     public interface IUnitOfWork
     {
         IContactRepository contacts { get; }
+        IServiceRepository services { get; }
         void Save();
     }
 }

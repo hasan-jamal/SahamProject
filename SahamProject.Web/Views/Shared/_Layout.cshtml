@@ -20,6 +20,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="~/SahamProject.Web.styles.css" asp-append-version="true" />
+    <!--DataTable-->
+      <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
 </head>
 <body>
     <header>
@@ -38,11 +40,11 @@
 
                 <!--  Menu compatible with wp_nav_menu  -->
                 <ul id="primary-menu" class="menu nav-menu">
-                    <li class="menu-item current-menu-item"><a class="nav__link" asp-controller="Home" asp-action="Index">About Saham</a></li>
-                    <li class="menu-item current-menu-item"><a class="nav__link" asp-controller="Home" asp-action="Index">Our Services</a></li>
-                    <li class="menu-item current-menu-item"><a class="nav__link" asp-controller="Contacts" asp-action="Create">Contact Us</a></li>
-                    <li class="menu-item current-menu-item"><a class="nav__link" asp-controller="Home" asp-action="Index">Track Shippment</a></li>
-                    <li class="menu-item current-menu-item"><a class="nav__link" asp-controller="Account" asp-action="Index">Sign in</a></li>
+                    <li class="menu-item"><a class="nav__link" asp-controller="Home" asp-action="Index">About Saham</a></li>
+                    <li class="menu-item"><a class="nav__link" asp-controller="Service" asp-action="Index">Our Services</a></li>
+                    <li class="menu-item"><a class="nav__link" asp-controller="Contacts" asp-action="Create">Contact Us</a></li>
+                    <li class="menu-item"><a class="nav__link" asp-controller="Home" asp-action="Index">Track Shippment</a></li>
+                    <li class="menu-item"><a class="nav__link" asp-controller="Account" asp-action="Index">Sign in</a></li>
 
                 </ul>
 
@@ -78,6 +80,10 @@
     <!--FontAwosome  JS---->
     <script src="~/assets/lib/fontawosome/all.min.js"></script>
     <script src="~/assets/lib/fontawosome/light.min.js"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

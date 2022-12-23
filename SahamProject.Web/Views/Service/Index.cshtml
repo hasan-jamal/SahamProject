@@ -1,0 +1,39 @@
+﻿<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h1 class="text-primary">Service List</h1>
+        </div>
+        <div class="col-6 text-end">
+            <a class="btn-primary btn" asp-area="Admin" asp-controller="Service" asp-action="Upsert"><i class="bi bi-plus-circle me-1"></i> Create New Service</a>
+        </div>
+    </div>
+
+
+<br />
+<br />
+
+<table id="tblData" class="table table-hover table-bordered ">
+
+    <thead>
+        <tr>
+            <th>
+                Image Product
+            </th>
+            <th>
+               Name
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+</table>
+
+@section Scripts{
+    <script src="~/js/Service.js"></script>
+}
+    
+</div>

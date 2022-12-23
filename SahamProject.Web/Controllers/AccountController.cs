@@ -34,7 +34,6 @@ namespace SahamProject.Web.Controllers
                     return View("Index");
                 }
                 return RedirectToAction("Index", "Home");
-
             }
             else
             {
