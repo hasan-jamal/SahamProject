@@ -21,7 +21,6 @@ namespace SahamProject.Web.Models
         public ApplicationUser? Customer { get; set; }
         public ApplicationUser? Merchan { get; set; }
         public Status? Status { get; set; }
-        [NotMapped]
         public virtual ICollection<ShipmentsProduct> ShipmentsProducts { get; set; }
     }
 }

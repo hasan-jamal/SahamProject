@@ -22,7 +22,6 @@ namespace SahamProject.Web.Models
         public string? BuildingNumber { get; set; }
         public string? ShortAddress { get; set; }
         public string? LocationMap { get; set; }
-        [NotMapped]
         public virtual ICollection<Shipment> MerchanShipments { get; set; }
         public virtual ICollection<Shipment> CustomerShipments { get; set; }
 
