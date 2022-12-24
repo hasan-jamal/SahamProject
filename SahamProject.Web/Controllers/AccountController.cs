@@ -1,6 +1,7 @@
 ﻿using eTickets.Data.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SahamProject.Web.Models;
 using SahamProject.Web.Utlity;
@@ -23,9 +24,48 @@ namespace SahamProject.Web.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Users() => View(await _context.Users.ToListAsync());
+        public async Task<IActionResult> Users()
+        => View(await _context.Users.ToListAsync());
 
+        [HttpGet]
+        public async Task<IActionResult> Update(string emaile)
+        {
+            var getUser = await _userManager.FindByEmailAsync(emaile);
+            if (getUser == null)
+                return RedirectToAction(nameof(Users));
 
+            var userRoles = await _context.UserRoles.
+                Where(x=> x.UserId == getUser.Id).
+                Select(x=> x.RoleId).ToListAsync();
+            var userRoleVM = new UserRolesViewModel {
+            Email = getUser.Email,
+            Name = getUser.Name!,
+            UserRoles = userRoles,
+            Roles = new SelectList(
+                await _context.Roles.ToListAsync(), "Id", "Name",
+                userRoles)
+            };
+            return View(userRoleVM);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(UserRolesViewModel userVM)
+        {
+            var user = await _userManager.FindByEmailAsync(userVM.Email);
+            if (userVM.UserRoles?.Count != 0)
+            {
+                foreach (var role in userVM.UserRoles!)
+                {
+                   var roleModel = await _context.Roles.FirstOrDefaultAsync(x => x.Id == role);
+                    if (roleModel == null) break;
+                    if (!await _userManager.IsInRoleAsync(user, roleModel.Name))
+                               await _userManager.AddToRoleAsync(user, roleModel.Name);
+                    
+                }
+            }
+
+            return RedirectToAction(nameof(Users));
+        }
         public IActionResult Index() => View(new LoginVM());
 
         //POST: Acount/Login
@@ -69,8 +109,9 @@ namespace SahamProject.Web.Controllers
             if (!result.Succeeded)
                 return View(registerVM);
 
-            await _userManager.AddToRoleAsync(newuser, SD.Role_Customer);
-            
+            var rseultRole = await _userManager.AddToRoleAsync(newuser, SD.Role_Customer);
+            if(!rseultRole.Succeeded)
+            return View(registerVM);
             return RedirectToAction(nameof(Index));
         }
 

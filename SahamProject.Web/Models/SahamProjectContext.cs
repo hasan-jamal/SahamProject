@@ -50,7 +50,7 @@ namespace SahamProject.Web.Models
                 HasOne(x => x.Customer)
                 .WithMany(x => x.CustomerShipments)
                 .HasForeignKey(x => x.CustomerId);
-
+            builder.Entity<IdentityUserRole<Guid>>().HasKey(x => new {x.UserId, x.RoleId});
             base.OnModelCreating(builder);
         }
     }

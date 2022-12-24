@@ -1,0 +1,24 @@
+﻿@model UserRolesViewModel
+@{
+    ViewData["Title"] = "Update User";
+}
+
+<div class="row">
+    <div class="col-md-10 offset-1">
+        <p>
+            <h4>
+                List of all users
+            </h4>
+        </p>
+        <form asp-action="Update" method="post" enctype="multipart/form-data">
+    <label hidden class="form-label" asp-for="Email"></label>
+    <input hidden class="form-control" asp-for="Email" />
+    <label class="form-label" asp-for="Name"></label>
+    <input disabled class="form-control" asp-for="Name" />
+    <label class="form-label" asp-for="Roles"></label>
+    <select class="form-control" asp-for="@Model.UserRoles" asp-items="@Model.Roles">
+    </select>
+    <input class="btn btn-outline-success my-3" type="submit" value="Update User" />
+</form>
+    </div>
+</div>
