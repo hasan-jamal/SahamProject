@@ -1,7 +1,11 @@
 ﻿using eTickets.Data.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SahamProject.Web.Models;
+using SahamProject.Web.Utlity;
+using SahamProject.Web.ViewModels;
+using System;
 using System.Diagnostics;
 using System.Security.Claims;
 
@@ -9,66 +13,72 @@ namespace SahamProject.Web.Controllers
 {
     public class AccountController : Controller
     {
-
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly SahamProjectContext _context;
-        public AccountController(SahamProjectContext context)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, SahamProjectContext context)
         {
+            _userManager = userManager;
+            _signInManager = signInManager;
             _context = context;
         }
-        [HttpGet]
-        public IActionResult Index()
-        {
-            return View();
-        }
+
+        public async Task<IActionResult> Users() => View(await _context.Users.ToListAsync());
+
+
+        public IActionResult Index() => View(new LoginVM());
+
         //POST: Acount/Login
         [HttpPost]
-        public async Task<ActionResult> Login(LoginVM model)
+        public async Task<IActionResult> Index(LoginVM login)
         {
-            if (ModelState.IsValid)
-            {
-                var merchants = await _context.Merchants
-                .SingleOrDefaultAsync(m => m.Email == model.Email && m.Password == model.Password);
-                if (merchants == null)
-                {
-                    ModelState.AddModelError("Password", "Invalid login attempt.");
-                    return View("Index");
-                }
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
-        }
-        public IActionResult Logout()
-        {
-            HttpContext.Session.Clear();
-            return View("Index");
-        }
+            if (!ModelState.IsValid) return View(login);
+            var user = await _userManager.FindByEmailAsync(login.Email);
+            if (user == null) { TempData["Error"] = "Wrong credentials. please try again!"; return View(login); }
 
-        public void ValidationMessage(string key, string alert, string value)
-        {
-            try
+            var passwordCheck = await _userManager.CheckPasswordAsync(user, login.Password);
+            if (passwordCheck)
             {
-                TempData.Remove(key);
-                TempData.Add(key, value);
-                TempData.Add("alertType", alert);
+                var result = await _signInManager.PasswordSignInAsync(user, login.Password, false, false);
+                if (result.Succeeded)
+                    return RedirectToAction("Index", "Home");
             }
-            catch
-            {
-                Debug.WriteLine("TempDataMessage Error");
-            }
+
+            TempData["Error"] = "Wrong credentials. please try again!";
+            return View(login);
 
         }
 
-        public IActionResult Success()
+        public IActionResult Register() => View(new RegisterVM());
+
+        //POST: Acount/Register
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterVM registerVM)
         {
-            return View();
+            if (!ModelState.IsValid) return View(registerVM);
+
+            var user = await _userManager.FindByEmailAsync(registerVM.EmailAddress);
+            if (user != null) { TempData["Error"] = "The Email Address Already Exist"; return View(registerVM); }
+            var newuser = new ApplicationUser()
+            {
+                Name = registerVM.FullName,
+                Email = registerVM.EmailAddress,
+                UserName = registerVM.EmailAddress,
+            };
+            var result = await _userManager.CreateAsync(newuser, registerVM.Password);
+            if (!result.Succeeded)
+                return View(registerVM);
+
+            await _userManager.AddToRoleAsync(newuser, SD.Role_Customer);
+            
+            return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Fail()
+        [HttpPost]
+        public async Task<IActionResult> Logout()
         {
-            return View();
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }
