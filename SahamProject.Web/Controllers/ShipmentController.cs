@@ -22,6 +22,10 @@ namespace SahamProject.Web.Controllers
             _userManager = userManager;
             _context = context;
         }
+        [HttpGet]
+        public IActionResult GetShipmentByOrderNumber(string orderNumber)
+          =>  View(_unit.shipments.GetFirstOrDeafult(a => a.OrderNumber.ToLower() == orderNumber.ToLower(), "Customer,Merchan,Status,ShipmentsProducts", false));
+        
 
         [HttpGet]
         public IActionResult Index()
