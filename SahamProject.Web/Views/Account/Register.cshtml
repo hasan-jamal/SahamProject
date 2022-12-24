@@ -1,26 +1,36 @@
-﻿@using eTickets.Data.ViewModels
-@model LoginVM
+﻿@using Microsoft.AspNetCore.Mvc.ModelBinding;
+@using SahamProject.Web.ViewModels
+@model RegisterVM
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Register";
 }
-        <section class="section-login">
+        <section class="section-register">
             <div class="container-padding">
                 <div class="row no-gutters shadow-lg align-items-center row-padd">
-                    <div class="col-md-6 d-none d-md-block image-login">
+                    <div class="col-md-6 d-none d-md-block image-register">
                         <img src="~/assets/images/dev1.jpg" class="img-fluid" style="min-height:100%;" />
                     </div>
                     <div class="col-md-6 bg-white content-form">
-                        <h1 class="pb-5">Login Form</h1>
+                        <h1 class="pb-5">Register Form</h1>
                         <div class="form-style">
-                            <form role="form" asp-action="Index" asp-controller="Account" method="post">
+                            <form role="form" asp-action="Register" asp-controller="Account" method="post">
                                 <div class="form-group pb-3">
-                                    <input  id="exampleInputEmail1" type="email" name="Email" asp-for="Email" class="form-control" placeholder="Email Address" aria-describedby="emailHelp">
-                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                    <input  id="FullName" type="text" name="FullName" asp-for="FullName" class="form-control" placeholder="Email Address" aria-describedby="emailHelp">
+                                    <span asp-validation-for="FullName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group pb-3">
+                                    <input  id="EmailAddress" type="email" name="EmailAddress" asp-for="EmailAddress" class="form-control" placeholder="Email Address" aria-describedby="emailHelp">
+                                    <span asp-validation-for="EmailAddress" class="text-danger"></span>
                                 </div>
                                 <div class="form-group pb-2">
                                     <input type="password" name="Password" asp-for="Password"  class="form-control" placeholder="Password"
                                         id="exampleInputPassword1">
                                           <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                                <div class="form-group pb-2">
+                                    <input type="password" name="ConfirmPassword" asp-for="ConfirmPassword"  class="form-control" placeholder="Password"
+                                        id="ConfirmPassword">
+                                          <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                                 </div>
                                 <div class="d-flex align-items-center justify-content-between flex-col pb-3">
                                     <div class="d-flex align-items-center">
@@ -31,7 +41,7 @@
                                 </div>
                                 <div class="pb-2">
                                     <button type="submit"
-                                        class="btn btn-login w-100 font-weight-bold mt-2">Submit</button>
+                                        class="btn btn-register w-100 font-weight-bold mt-2">Submit</button>
                                 </div>
                             </form>
 
