@@ -14,7 +14,7 @@ namespace SahamProject.Web.Models
         public int Id { get; set; }
         public double? Price { get; set; }
         public string? MerchanId { get; set; }
-        public int OrderNumber { get; set; }
+        public string OrderNumber { get; set; }
         public string? CustomerId { get; set; }
         public int StatusId { get; set; }
         public string ShipmentTypeId { get; set; } = string.Empty;
