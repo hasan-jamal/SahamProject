@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SahamProject.Web.DataAccess.IRepository;
+using SahamProject.Web.Models;
 using SahamProject.Web.ViewModels;
 
 namespace SahamProject.Web.Controllers
@@ -19,6 +20,13 @@ namespace SahamProject.Web.Controllers
             return View();
         }
 
+        public IActionResult ServicePage()
+        {
+            IEnumerable<Service> objectcontactsList = _unitOfWork.services.GetAll();
+
+            return View(objectcontactsList);
+        }
+
         public IActionResult Upsert(int? id)
         {
             ServicesVM serviceVM = new()
@@ -32,7 +40,7 @@ namespace SahamProject.Web.Controllers
             }
             else
             {
-                //Update Product
+                //Update Service
                 serviceVM.Service = _unitOfWork.services.GetFirstOrDeafult(u => u.Id == id);
                 return View(serviceVM);
             }
@@ -71,7 +79,7 @@ namespace SahamProject.Web.Controllers
                 else
                 {
                     _unitOfWork.services.Update(serviceVM.Service);
-                    TempData["success"] = " Update Category is successfully";
+                    TempData["success"] = " Update Service is successfully";
                 }
                 _unitOfWork.Save();
 
@@ -95,8 +103,6 @@ namespace SahamProject.Web.Controllers
         public IActionResult Delete(int? id)
         {
             var category = _unitOfWork.services.GetFirstOrDeafult(u => u.Id == id);
-            // var coverType = _db.CoverType.FirstOrDefault(c => c.Id == id);
-            //var coverType = _db.CoverType.SingleOrDefault(c => c.Id == id);
             if (category == null)
             {
                 return Json(new { success = false, message = "Error While deleting" });

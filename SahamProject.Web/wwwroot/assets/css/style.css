@@ -441,13 +441,13 @@ height: 32.74px;
     height: 200px;
 }
 .images-size img{
-  height:250px;
+  height:300px;
   object-fit: contain;
 }
 
 .images-size h5{
   text-align: center;
-  font-size: 25px;
+  font-size: 35px;
   color: #F37121;
   font-family: 'Poppins';
   font-weight: bold;
@@ -511,6 +511,10 @@ height: 32.74px;
   .card-div:nth-child(even) {
     direction: ltr;
   }
+.btn-primary {
+    background: #F37121 !important;
+    border:none !important;
+}
   .card-div {
     background: #fff;
     border-radius: 10px;
@@ -520,7 +524,7 @@ height: 32.74px;
 }
   .card-div p {
     text-align: center;
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-family: 'Cairo';
     line-height: 2rem;
     margin: auto;
