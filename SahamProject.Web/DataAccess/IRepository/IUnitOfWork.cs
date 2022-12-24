@@ -12,6 +12,7 @@ namespace SahamProject.Web.DataAccess.IRepository
         IServiceRepository services { get; }
         IShipmentRepository shipments { get; }
         IShipmentsProductRepository shipmentsProducts { get; }
+        IStatusRepository status { get; }
         void Save();
     }
 }
