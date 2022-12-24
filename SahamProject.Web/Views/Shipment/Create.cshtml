@@ -1,4 +1,4 @@
-﻿@model Shipment 
+﻿@model ShipmentVM 
 
 @{
     ViewBag.Title = "Create Shipment";
@@ -11,42 +11,32 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Price</label>
-                                    <input type="text" asp-for="Price" class="form-control" placeholder="Add price">
+                                    <label class="form-label" asp-for="@Model.Shipment.Price"></label>
+                                    <input type="text" asp-for="@Model.Shipment.Price" class="form-control" placeholder="Add price">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Order Number</label>
-                                    <input type="text" asp-for="OrderNumber" class="form-control" placeholder="Add order number">
+                                    <label class="form-label" asp-for="@Model.Shipment.OrderNumber"></label>
+                                    <input type="text" asp-for="@Model.Shipment.OrderNumber" class="form-control" placeholder="Add order number">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Customer Name</label>
-                                    <select name="cars" id="cars" class="form-control" >
-                                        <option value="volvo" >Volvo</option>
-                                        <option value="saab">Saab</option>
-                                        <option value="mercedes">Mercedes</option>
-                                        <option value="audi">Audi</option>
-                                    </select>
+                                    <label class="form-label" asp-for="@Model.Customers"></label>
+                                    <select class="form-control"  asp-for="@Model.Customers" asp-items="@Model.Customers" ></select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Status</label>
-                                    <select name="cars" id="cars" class="form-control" asp-for="Customer">
-                                        <option value="volvo">Volvo</option>
-                                        <option value="saab">Saab</option>
-                                        <option value="mercedes">Mercedes</option>
-                                        <option value="audi">Audi</option>
-                                    </select>
+                                    <label class="form-label" asp-for="@Model.Status"></label>
+                                    <select asp-items="@Model.Status" class="form-control" asp-for="@Model.Status"></select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="">Shipment Type Id</label>
-                                    <input type="text" asp-for="ShipmentTypeId" class="form-control" placeholder="Add shipment type Id">
+                                    <label class="form-label" asp-for="@Model.Shipment.ShipmentTypeId">Shipment Type Id</label>
+                                    <input type="text" asp-for="@Model.Shipment.ShipmentTypeId" class="form-control" placeholder="Add shipment type Id">
                                 </div>
                             </div>
                             <div class="col-md-12 mt-4">
