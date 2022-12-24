@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SahamProject.Web.Models
 {
@@ -9,18 +11,17 @@ namespace SahamProject.Web.Models
         {
             ShipmentsProducts = new HashSet<ShipmentsProduct>();
         }
-
         public int Id { get; set; }
         public double? Price { get; set; }
-        public int? MerchanId { get; set; }
+        public string? MerchanId { get; set; }
         public int OrderNumber { get; set; }
-        public int? CustomerId { get; set; }
-        public int? StatusId { get; set; }
-        public string? ShipmentTypeId { get; set; }
-
-        public virtual Customer? Customer { get; set; }
-        public virtual Merchant? Merchan { get; set; }
-        public virtual Status? Status { get; set; }
+        public string? CustomerId { get; set; }
+        public int StatusId { get; set; }
+        public string ShipmentTypeId { get; set; } = string.Empty;
+        public ApplicationUser? Customer { get; set; }
+        public ApplicationUser? Merchan { get; set; }
+        public Status? Status { get; set; }
+        [NotMapped]
         public virtual ICollection<ShipmentsProduct> ShipmentsProducts { get; set; }
     }
 }
