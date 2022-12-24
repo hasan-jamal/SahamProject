@@ -7,7 +7,7 @@
 
         <h1 class="h1-header mt-5"> Create Shipment</h1>
                 <div class="container text-home">
-                    <form method="post" role="form">
+                    <form asp-action="Create" method="post"role="form">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -24,13 +24,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label" asp-for="@Model.Customers"></label>
-                                    <select class="form-control single-select"  asp-for="@Model.Customers" asp-items="@Model.Customers" ></select>
+                                    <select class="form-control"  asp-for="@Model.CustomersId" asp-items="@Model.Customers" ></select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label" asp-for="@Model.Status"></label>
-                                    <select class="form-control single-select"  asp-for="@Model.Status" asp-items="@Model.Status" ></select>
+                                    <select asp-items="@Model.Status" class="form-control" asp-for="@Model.StatusId"></select>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -41,7 +41,7 @@
                             </div>
                             <div class="col-md-12 mt-4">
                                 <div class="form-group">
-                                    <button class="btn btn-success w-30">Add Shipment</button>
+                                    <button type="submit" class="btn btn-success w-30">Add Shipment</button>
                                     <button type="reset" class="btn btn-danger">Reset</button>
                                 </div>
                             </div>
