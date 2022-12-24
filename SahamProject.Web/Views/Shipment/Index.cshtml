@@ -4,9 +4,12 @@
     ViewBag.Title = "Table Shipment";
     Layout = "~/Views/Shared/_dashboard.cshtml";
 }
-
+                                         
    <h1 class="h1-header mt-5"> Table Shipment</h1>
+
+     
         <div class="container text-home">
+                <a asp-controller="Shipment" asp-action="Create" class="btn btn-success mt-3">Add Shipment</a>
             <table
                 class="table table-hover table-striped table-design overflow-auto pt-5 mt-5 table-bordered row-form mb-5"
                 style="vertical-align: middle; text-align: center;">

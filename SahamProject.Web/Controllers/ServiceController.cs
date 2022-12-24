@@ -17,7 +17,9 @@ namespace SahamProject.Web.Controllers
         public IActionResult Index()
         {
 
-            return View();
+            IEnumerable<Service> objectServicesList = _unitOfWork.services.GetAll();
+
+            return View(objectServicesList);
         }
 
         public IActionResult ServicePage()

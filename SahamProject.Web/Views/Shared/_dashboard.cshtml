@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+        <!--DataTable-->
+    <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
 </head>
 
 <body>
@@ -36,32 +38,32 @@
 
             </header>
             <nav class="dashboard-nav-list">
-                <a href="../HomePage/home.php" class="dashboard-nav-item dashboard-back ">
+                <a asp-controller="Home" asp-action="Index" class="dashboard-nav-item ">
                     <i class="fas fa-home"></i>
                     Home Page
                 </a>
-                <a href="../ProductsComponent/Product.php" class="dashboard-nav-item  ">
+                <a asp-controller="Shipment" asp-action="Index" class="dashboard-nav-item  ">
                     <i class="fa-solid fa-walkie-talkie"></i>
                     Shipment Component
                 </a>
-                <a href="../ContactsComponent/Contact.php" class="dashboard-nav-item  ">
+                <a asp-controller="ShipmentsProduct" asp-action="Index" class="dashboard-nav-item  ">
                     <i class="fa-solid fa-walkie-talkie"></i>
                     Shipments Products Component
                 </a>
-                <a href="../AboutsComponent/About.php" class="dashboard-nav-item  ">
+                <a asp-controller="Service" asp-action="Index" class="dashboard-nav-item  ">
                     <i class="fa-solid fa-walkie-talkie"></i>
                     Services Component
                 </a>
-                <a href="../ContactInformation/Information.php" class="dashboard-nav-item">
+                <a asp-controller="Contacts" asp-action="Index" class="dashboard-nav-item">
                     <i class="fa-solid fa-walkie-talkie"></i>
                     Contacts Components
                 </a>
-                <a href="../UsersComponent/User.php" class="dashboard-nav-item  ">
+                <a asp-controller="Account" asp-action="Users" class="dashboard-nav-item  ">
                     <i class="fa-solid fa-walkie-talkie"></i>
                     Users Component
                 </a>
                 <div class="nav-item-divider"></div>
-                <a href="../logout.php" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Logout </a>
+                <a asp-controller="Account" asp-action="Logout" class="dashboard-nav-item"><i class="fas fa-sign-out-alt"></i> Logout </a>
             </nav>
 
         </div>
@@ -70,7 +72,7 @@
             <header class='dashboard-toolbar'>
                 <div class="d-flex justify-content-between align-items-center flex-elem">
                     <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
-                    <h1 class="h1-design d-block ml-auto "><img src="../images/profile.png" alt="" width="40"
+                    <h1 class="h1-design d-block ml-auto "><img src="~/assets/images/profile.png" alt="" width="40"
                             class="img-design mx-2"> Hasan
                     </h1>
                 </div>
@@ -152,7 +154,8 @@
             Saham
         </footer>
     </div>
-
+     
+    <script src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <!-- font -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -164,7 +167,7 @@
 
     <!-- icon i -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-
+     @await RenderSectionAsync("Scripts", required: false)
 </body>
 
 </html>

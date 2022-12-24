@@ -1,15 +1,18 @@
 ﻿@model SahamProject.Web.ViewModels.ServicesVM
 
+@{
+    ViewBag.Title = "Table Services";
+    Layout = "~/Views/Shared/_dashboard.cshtml";
+}
+
+   <h1 class="h1-header mt-5">  @(Model.Service.Id != 0 ? "Update" : "Create") Service</h1>
+
 <div class="container">
 <form method="post" class="mb-5" asp-action="Upsert" enctype="multipart/form-data">
     <input asp-for="Service.Id" hidden />
     <input asp-for="Service.ImageUrl" hidden />
 
-    <div class="border p-3 mt-4 row">
-        <div class="row pb-2">
-            <h2 class="text-primary"> @(Model.Service.Id != 0 ? "Update" : "Create") Service</h2>
-            <hr />
-        </div>
+    <div class="row mt-5">
         @*<div asp-validation-summary="All"></div>*@
         <div class="col-lg-6">
             <div class="mb-3">
