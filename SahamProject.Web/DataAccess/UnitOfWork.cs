@@ -13,11 +13,13 @@ namespace SahamProject.Web.DataAccess
             contacts = new ContactsRepository(_db);
             services = new ServiceRepository(_db);
             shipments = new ShipmentRepository(_db);
+            shipmentsProducts = new ShipmentsProductRepository(_db);
         }
 
         public IContactRepository contacts { get; private set; }
         public IServiceRepository services { get; private set; }
         public IShipmentRepository shipments { get; private set; }
+        public IShipmentsProductRepository shipmentsProducts { get; private set; }
         public void Save()
         {
           _db.SaveChanges();
