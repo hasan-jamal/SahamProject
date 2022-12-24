@@ -50,6 +50,9 @@ namespace SahamProject.Web.Models
                 .WithMany(x => x.CustomerShipments)
                 .HasForeignKey(x => x.CustomerId);
             builder.Entity<IdentityUserRole<Guid>>().HasKey(x => new {x.UserId, x.RoleId});
+            builder.Entity<Status>().HasData(new Status{ Id=1, Name = "Begin"});
+            builder.Entity<Status>().HasData(new Status{ Id = 2, Name = "InPrgoress" });
+            builder.Entity<Status>().HasData(new Status{ Id = 3, Name = "Done" });
             base.OnModelCreating(builder);
         }
     }
