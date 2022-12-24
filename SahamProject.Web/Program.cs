@@ -1,6 +1,6 @@
 using SahamProject.Web.DataAccess;
 using SahamProject.Web.DataAccess.IRepository;
-using SahamProject.Web.Models;
+using SahamProject.Web.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddControllers();
-builder.Services.AddDbContext<SahamProjectContext>();
+builder.Services.AddDataLayer(builder.Configuration).
+                 AddAuthLayer();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 var app = builder.Build();
 
@@ -24,7 +25,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
