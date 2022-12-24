@@ -15,8 +15,7 @@ namespace SahamProject.Web.Models
         }
 
         public SahamProjectContext(
-            DbContextOptions<SahamProjectContext> options
-                                  ) : base(options) { }
+            DbContextOptions<SahamProjectContext> options) : base(options) { }
 
         public virtual DbSet<Contact> Contacts { get; set; } = null!;
         public virtual DbSet<Service> Services { get; set; } = null!;
