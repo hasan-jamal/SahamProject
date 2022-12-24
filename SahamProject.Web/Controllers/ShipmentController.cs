@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SahamProject.Web.DataAccess.IRepository;
@@ -24,9 +25,12 @@ namespace SahamProject.Web.Controllers
 
         [HttpGet]
         public IActionResult Index()
-         => View(_unit.shipments.GetAll(null, "Customer,Merchan,Status,ShipmentsProducts"));
-
+        {
+            var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
+         return View(_unit.shipments.GetAll( a => a.MerchanId == user, "Customer,Merchan,Status,ShipmentsProducts"));
+        }
         [HttpGet]
+        [Authorize(Roles = SD.Role_Merchant)]
         public IActionResult Update(int id)
         {
             var shipment = _unit.shipments.
@@ -52,20 +56,23 @@ namespace SahamProject.Web.Controllers
             return View(shipmentVM);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = SD.Role_Merchant)]
         public IActionResult Update(ShipmentVM shipmentVM) 
         {
-            if (!ModelState.IsValid || shipmentVM.Shipment.MerchanId != User.FindFirstValue(ClaimTypes.NameIdentifier))
-                return View(shipmentVM);
-
-            var shipment = shipmentVM.Shipment;
+            var shipment = new Shipment();
+            shipment = shipmentVM.Shipment;
             shipment.CustomerId = shipmentVM.CustomersId;
             shipment.StatusId = shipmentVM.StatusId;
+            if (shipment == null || shipmentVM == null || shipmentVM.Shipment.MerchanId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+                return View(shipmentVM);
             _unit.shipments.Update(shipment);
             _unit.Save();
             return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]
+        [Authorize(Roles = SD.Role_Merchant)]
         public IActionResult Create()
         {
             var customerRole = _context.Roles.FirstOrDefault(a=> a.Name == SD.Role_Customer);
@@ -87,10 +94,16 @@ namespace SahamProject.Web.Controllers
          return View(shipmentVM);
         }
         [HttpPost]
-        public IActionResult Create(Shipment shipment)
+        [Authorize(Roles = SD.Role_Merchant)]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(ShipmentVM shipmentVM)
         {
+            var shipment = new Shipment();
+            shipment = shipmentVM.Shipment;
             shipment.MerchanId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (!ModelState.IsValid) return View(shipment);
+            shipment.StatusId = shipmentVM.StatusId;
+            shipment.CustomerId = shipmentVM.CustomersId;
+            if (shipment == null || shipmentVM == null) return View(shipment);
             _unit.shipments.Add(shipment);
             _unit.Save();
             return RedirectToAction(nameof(Index));

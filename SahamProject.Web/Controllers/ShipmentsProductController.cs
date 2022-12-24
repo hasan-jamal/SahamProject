@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SahamProject.Web.DataAccess.IRepository;
 using SahamProject.Web.Models;
+using SahamProject.Web.Utlity;
 
 namespace SahamProject.Web.Controllers
 {
@@ -17,10 +19,13 @@ namespace SahamProject.Web.Controllers
          => View(_unit.shipmentsProducts.GetAll(null, "Shipment"));
 
         [HttpGet]
+        [Authorize(Roles = SD.Role_Merchant)]
         public IActionResult Update(int id)
             => View(_unit.shipmentsProducts.GetFirstOrDeafult(a => a.Id == id, "Shipment", false));
 
         [HttpPost]
+        [Authorize(Roles = SD.Role_Merchant)]
+        [ValidateAntiForgeryToken]
         public IActionResult Update(ShipmentsProduct shipmentsProduct)
         {
             if (!ModelState.IsValid) return View(shipmentsProduct);
@@ -30,10 +35,13 @@ namespace SahamProject.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = SD.Role_Merchant)]
         public IActionResult Create()
          => View(new ShipmentsProduct());
 
         [HttpPost]
+        [Authorize(Roles = SD.Role_Merchant)]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(ShipmentsProduct shipmentsProduct)
         {
             if (!ModelState.IsValid) return View(shipmentsProduct);

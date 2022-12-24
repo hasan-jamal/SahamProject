@@ -10,6 +10,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddControllers();
 builder.Services.AddDataLayer(builder.Configuration).
                  AddAuthLayer();
+builder.Services.AddMemoryCache();
+builder.Services.AddSession();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 var app = builder.Build();
 
@@ -25,6 +27,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseSession();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
