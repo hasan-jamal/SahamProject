@@ -19,9 +19,12 @@
         <label class="form-label" asp-for="Name"></label>
         <input disabled class="form-control" asp-for="Name" />
         <label class="form-label" asp-for="Roles"></label>
-        <select class="form-control" asp-for="@Model.UserRoles" asp-items="@Model.Roles">
+        <select class="form-control selectpicker bs-select-hidden single-select" asp-for="@Model.UserRoles" asp-items="@Model.Roles">
+            <option>Please select one</option>
         </select>
+
         <input class="btn btn-outline-success my-3" type="submit" value="Update User" />
     </form>
     </div>
 </div>
+

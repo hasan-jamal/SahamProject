@@ -26,31 +26,46 @@ namespace SahamProject.Web.Models
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<IdentityRole>().
-                HasData(new IdentityRole 
-                { Name= SD.Role_Admin, 
-                    NormalizedName = SD.Role_Admin_NormalizedName});
-            
+               HasData(new IdentityRole
+               {
+                   Name = SD.Role_Admin,
+                   NormalizedName = SD.Role_Admin_NormalizedName
+               });
+
             builder.Entity<IdentityRole>().
-                HasData(new IdentityRole 
-                { Name= SD.Role_Merchant,
-                    NormalizedName = SD.Role_Merchant_NormalizedName });
-            
+                HasData(new IdentityRole
+                {
+                    Name = SD.Role_Merchant,
+                    NormalizedName = SD.Role_Merchant_NormalizedName
+                });
+
             builder.Entity<IdentityRole>().
-                HasData(new IdentityRole 
-                { Name= SD.Role_Customer, 
-                    NormalizedName = SD.Role_Customer_NormalizedName });
+                HasData(new IdentityRole
+                {
+                    Name = SD.Role_Customer,
+                    NormalizedName = SD.Role_Customer_NormalizedName
+                });
 
             builder.Entity<Shipment>().
                 HasOne(x => x.Merchan)
-                .WithMany(x=> x.MerchanShipments)
-                .HasForeignKey(x=> x.MerchanId);
+                .WithMany(x => x.MerchanShipments)
+                .HasForeignKey(x => x.MerchanId);
 
             builder.Entity<Shipment>().
                 HasOne(x => x.Customer)
                 .WithMany(x => x.CustomerShipments)
                 .HasForeignKey(x => x.CustomerId);
-            builder.Entity<IdentityUserRole<Guid>>().HasKey(x => new {x.UserId, x.RoleId});
+
+            builder.Entity<IdentityUserRole<Guid>>().HasKey(x => new { x.UserId, x.RoleId });
+
+            builder.Entity<Status>().HasData(new Status { Id = 1, Name = "Begin" });
+            builder.Entity<Status>().HasData(new Status { Id = 2, Name = "InPrgoress" });
+            builder.Entity<Status>().HasData(new Status { Id = 3, Name = "Done" });
+
             base.OnModelCreating(builder);
         }
+
+
     }
-}
+    }
+

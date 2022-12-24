@@ -7,9 +7,9 @@
 }
 
 <h1 class="h1-header mt-5">Users List</h1>
+<div class="container">
 <div class="row">
-    <div class="col-md-6 offset-md-3">
-    <div class="col-md-6 offset-md-3">
+    <div class="col-md-12">
         <p>
             <h4>
                 List of all users
@@ -27,16 +27,18 @@
             <tbody>
                 @foreach (var user in Model)
                 {
-                        <tr>
+                        <tr class="text-center">
                             <td class="align-middle">@Html.DisplayFor(u => user.Name)</td>
                             <td class="align-middle">@Html.DisplayFor(u => user.UserName)</td>
                             <td class="align-middle">@Html.DisplayFor(u => user.Email)</td>
                             <td class="align-middle">
-                                        <a class="btn btn-outline-primary" asp-action="Update" asp-route-emaile="@user.Email">Update</a>
+                               <a class="btn btn-outline-primary m-auto d-block" asp-action="Update" asp-route-emaile="@user.Email">Update</a>
                             </td>
                         </tr>
                 }
             </tbody>
         </table>
-    </div>
+  
+</div>
+
 </div>

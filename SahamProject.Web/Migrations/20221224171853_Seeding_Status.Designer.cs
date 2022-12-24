@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SahamProject.Web.Models;
 
@@ -11,9 +12,10 @@ using SahamProject.Web.Models;
 namespace SahamProject.Web.Migrations
 {
     [DbContext(typeof(SahamProjectContext))]
-    partial class SahamProjectContextModelSnapshot : ModelSnapshot
+    [Migration("20221224171853_Seeding_Status")]
+    partial class Seeding_Status
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,29 +49,6 @@ namespace SahamProject.Web.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "49683740-9f88-43d3-9083-49370dee79ef",
-                            ConcurrencyStamp = "75932473-6b49-4247-b010-8a4fec0da355",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "043114d0-4fb6-4f25-ac30-e0a1b32ddfbf",
-                            ConcurrencyStamp = "54cfe117-ba81-4483-86d2-ba2d08d54107",
-                            Name = "Merchant",
-                            NormalizedName = "MERCHANT"
-                        },
-                        new
-                        {
-                            Id = "31ce0219-ccea-44e7-b714-ed5b6a20e2b9",
-                            ConcurrencyStamp = "a43ba216-a58c-42de-ad9a-13ac9e2e82f0",
-                            Name = "Customer ",
-                            NormalizedName = "CUSTOMER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
