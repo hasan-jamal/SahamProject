@@ -1,0 +1,62 @@
+﻿@model Shipment 
+
+@{
+    ViewBag.Title = "Create Shipment";
+    Layout = "~/Views/Shared/_dashboard.cshtml";
+}
+
+        <h1 class="h1-header mt-5"> Create Shipment</h1>
+                <div class="container text-home">
+                    <form method="post"role="form">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Price</label>
+                                    <input type="text" asp-for="Price" class="form-control" placeholder="Add price">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Order Number</label>
+                                    <input type="text" asp-for="OrderNumber" class="form-control" placeholder="Add order number">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Customer Name</label>
+                                    <select name="cars" id="cars" class="form-control" >
+                                        <option value="volvo" >Volvo</option>
+                                        <option value="saab">Saab</option>
+                                        <option value="mercedes">Mercedes</option>
+                                        <option value="audi">Audi</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Status</label>
+                                    <select name="cars" id="cars" class="form-control" asp-for="Customer">
+                                        <option value="volvo">Volvo</option>
+                                        <option value="saab">Saab</option>
+                                        <option value="mercedes">Mercedes</option>
+                                        <option value="audi">Audi</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="">Shipment Type Id</label>
+                                    <input type="text" asp-for="ShipmentTypeId" class="form-control" placeholder="Add shipment type Id">
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-4">
+                                <div class="form-group">
+                                    <button class="btn btn-success w-30">Add Shipment</button>
+                                    <button type="reset" class="btn btn-danger">Reset</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
