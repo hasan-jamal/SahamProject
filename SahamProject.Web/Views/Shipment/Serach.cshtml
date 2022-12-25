@@ -34,17 +34,17 @@
         <table id="catList" class="table table-bordered table-striped text-center" style="margin-top:20px;height:auto">
                     <thead class="text-uppercase" style="font-weight:bold; font-size:20px;">
                         <tr>
-                            <td>Category Name</td>
-                            <td>Category Image</td>
+                            <td>Order Number</td>
+                            <td>Merchan Name</td>
                           
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(var item in Model)
+                        @foreach(var item in Model.ShipmentsProducts)
                         {
                             <tr class="text-center" id="row_@item.Id">
-                                <td style="padding-top:36px;font-size:20px;">@item.OrderNumber</td>
-                                <td style="padding-top:36px;font-size:20px;">@item.Merchan.Name</td>
+                                <td style="padding-top:36px;font-size:20px;">@item.Description</td>
+                                <td style="padding-top:36px;font-size:20px;">@item.Height</td>
                             
                             </tr>
                         }
