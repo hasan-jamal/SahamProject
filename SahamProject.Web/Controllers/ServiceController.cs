@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SahamProject.Web.DataAccess.IRepository;
 using SahamProject.Web.Models;
+using SahamProject.Web.Utlity;
 using SahamProject.Web.ViewModels;
+using System.Data;
 
 namespace SahamProject.Web.Controllers
 {
+    [Authorize(Roles = SD.Role_Admin)]
     public class ServiceController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

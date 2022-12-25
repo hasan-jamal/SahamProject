@@ -7,6 +7,7 @@ using SahamProject.Web.ViewModels;
 
 namespace SahamProject.Web.Controllers
 {
+    [Authorize(Roles = SD.Role_Admin)]
     public class ContactsController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -19,11 +20,13 @@ namespace SahamProject.Web.Controllers
             IEnumerable<Contact> objectcontactsList = _unitOfWork.contacts.GetAll();
             return View(objectcontactsList);
         }
+        [AllowAnonymous]
         public IActionResult Create()
         {
             return View();
         }
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Contact contact)
         {

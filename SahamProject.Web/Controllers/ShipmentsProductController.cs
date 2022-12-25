@@ -10,6 +10,7 @@ using System.Security.Claims;
 
 namespace SahamProject.Web.Controllers
 {
+    [Authorize(Roles = $"{SD.Role_Merchant},{SD.Role_Admin}")]
     public class ShipmentsProductController : Controller
     {
         private readonly IUnitOfWork _unit;

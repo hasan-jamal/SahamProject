@@ -24,6 +24,9 @@ namespace SahamProject.Web.Controllers
             _signInManager = signInManager;
             _context = context;
         }
+
+        public IActionResult AccessDenied() => View();
+
         [HttpGet]
         [Authorize(Roles = SD.Role_Admin)]
         public async Task<IActionResult> Users()
@@ -72,7 +75,12 @@ namespace SahamProject.Web.Controllers
 
             return RedirectToAction(nameof(Users));
         }
-        public IActionResult Index() => View(new LoginVM());
+        public IActionResult Index() 
+        {
+            if (User.Identity.IsAuthenticated) return RedirectToAction("Home","Index");
+            
+            return View(new LoginVM());
+        }
 
         //POST: Acount/Login
         [HttpPost]
