@@ -120,7 +120,6 @@ namespace SahamProject.Web.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = SD.Role_Merchant)]
         public IActionResult Delete(int? id)
         {
             if (id == 0 && id == null)
@@ -136,7 +135,6 @@ namespace SahamProject.Web.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        [Authorize(Roles = SD.Role_Merchant)]
         [ValidateAntiForgeryToken]
         public IActionResult DeletePost(int? id)
         {

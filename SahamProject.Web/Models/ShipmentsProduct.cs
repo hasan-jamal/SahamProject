@@ -11,7 +11,7 @@ namespace SahamProject.Web.Models
         public string? Length { get; set; }
         public string? Height { get; set; }
         public string? Weight { get; set; }
-        public bool? IsBreakable { get; set; }
+        public bool IsBreakable { get; set; }
         public int ShipmentId { get; set; }
 
         public virtual Shipment? Shipment { get; set; }
