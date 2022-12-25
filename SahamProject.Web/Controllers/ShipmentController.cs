@@ -23,6 +23,11 @@ namespace SahamProject.Web.Controllers
             _context = context;
         }
         [HttpGet]
+        public IActionResult Serach()
+        {
+            return View();
+        }
+        [HttpGet]
         public IActionResult GetShipmentByOrderNumber(string orderNumber)
           => View(_unit.shipments.GetFirstOrDeafult(a => a.OrderNumber.ToLower() == orderNumber.ToLower(), "Customer,Merchan,Status,ShipmentsProducts", false));
 
