@@ -44,25 +44,11 @@
                     <i class="fa-solid fa-walkie-talkie"></i>
                     Shipment Component
                 </a>
-                @if(SD.Role_Admin == "Admin"){
                 <a asp-controller="ShipmentsProduct" asp-action="Index" class="dashboard-nav-item  ">
                     <i class="fa-solid fa-walkie-talkie"></i>
                     Shipments Products Component
                 </a>
-                <a asp-controller="Service" asp-action="Index" class="dashboard-nav-item  ">
-                    <i class="fa-solid fa-walkie-talkie"></i>
-                    Services Component
-                </a>
-                <a asp-controller="Contacts" asp-action="Index" class="dashboard-nav-item">
-                    <i class="fa-solid fa-walkie-talkie"></i>
-                    Contacts Components
-                </a>
-                <a asp-controller="Account" asp-action="Users" class="dashboard-nav-item  ">
-                    <i class="fa-solid fa-walkie-talkie"></i>
-                    Users Component
-                </a>
-
-                }
+                <partial name="_IdentityDashBoard.cshtml"/>
                
                 <div class="nav-item-divider"></div>
                 <form asp-controller="Account" asp-action="Logout">
