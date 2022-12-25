@@ -30,7 +30,7 @@ namespace SahamProject.Web.Controllers
         => View(await _context.Users.ToListAsync());
 
         [HttpGet]
-        [Authorize(SD.Role_Admin)]
+        [Authorize(Roles = SD.Role_Admin)]
         public async Task<IActionResult> Update(string emaile)
         {
             var getUser = await _userManager.FindByEmailAsync(emaile);

@@ -1,16 +1,15 @@
 ﻿@model ShpmentProductVM 
 
 @{
-    ViewBag.Title = "Update Shipment Product";
+    ViewBag.Title = "Update Shpment Product";
     Layout = "~/Views/Shared/_dashboard.cshtml";
 }
 
-        <h1 class="h1-header mt-5"> Update Shipment Product</h1>
+        <h1 class="h1-header mt-5"> Create Shipment Product</h1>
                 <div class="container text-home">
                     <form asp-action="Update" method="post"role="form">
                         <input hidden asp-for="@Model.ShipmentsProducts.Id"/>
                         <div class="row">
-                            <input hidden asp-for="@Model.ShipmentsProducts.Shipment.MerchanId"/>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label" asp-for="@Model.ShipmentsProducts.Description"></label>
@@ -23,26 +22,46 @@
                                     <input type="text" asp-for="@Model.ShipmentsProducts.Width" class="form-control" placeholder="Add Width">
                                 </div>
                             </div>
-                         <div class="col-md-6">
+
+                              <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label" asp-for="@Model.ShipmentsProducts.Length"></label>
                                     <input type="text" asp-for="@Model.ShipmentsProducts.Length" class="form-control" placeholder="Add Length">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" asp-for="@Model.ShipmentsProducts.Height"></label>
+                                    <input type="text" asp-for="@Model.ShipmentsProducts.Height" class="form-control" placeholder="Add Height">
+                                </div>
+                            </div>
+
+
+                              <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label" asp-for="@Model.ShipmentsProducts.Weight"></label>
                                     <input type="text" asp-for="@Model.ShipmentsProducts.Weight" class="form-control" placeholder="Add Weight">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+
+                              <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label" asp-for="@Model.ShipmentsProducts.IsBreakable"></label>
-                                    <input type="text" asp-for="@Model.ShipmentsProducts.Width" class="form-control" placeholder="Add Width">
+                                     <select class="form-control"  asp-for="@Model.ShipmentsProducts.IsBreakable" >
+                                         <option value="true">true</option>
+                                         <option value="false">false</option>
+                                     </select>
+
                                 </div>
                             </div>
-                           
-                          
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" asp-for="@Model.Shipments"></label>
+                                    <select class="form-control"  asp-for="@Model.ShipmentId" asp-items="@Model.Shipments" ></select>
+                                </div>
+                            </div>
                             <div class="col-md-12 mt-4">
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-success w-30">Update Shipment</button>

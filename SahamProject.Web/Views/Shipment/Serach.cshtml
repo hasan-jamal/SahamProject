@@ -40,11 +40,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(var item in Model)
+                        @foreach(var item in Model.ShipmentsProducts)
                         {
                             <tr class="text-center" id="row_@item.Id">
-                                <td style="padding-top:36px;font-size:20px;">@item.OrderNumber</td>
-                                <td style="padding-top:36px;font-size:20px;">@item.Merchan.Name</td>
+                                <td style="padding-top:36px;font-size:20px;">@item.Description</td>
+                                <td style="padding-top:36px;font-size:20px;">@item.IsBreakable</td>
                             
                             </tr>
                         }

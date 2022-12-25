@@ -23,37 +23,66 @@ namespace SahamProject.Web.Controllers
         } 
 
         [HttpGet]
-        public IActionResult Index()
+        [Authorize(Roles = $"{SD.Role_Merchant},{SD.Role_Admin}")]
+        public async Task<IActionResult> Index()
         {
             var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return View(_unit.shipmentsProducts.GetAll(a => a.Shipment.MerchanId == user, "Shipment"));
+            var currentUser = await _userManager.
+                                FindByEmailAsync(User.
+                                                    FindFirstValue(ClaimTypes.Email));
+            var result = new List<ShipmentsProduct>();
+            if (await _userManager.IsInRoleAsync(currentUser, SD.Role_Admin))
+            {
+                result = _unit.shipmentsProducts.
+                         GetAll(null, "Shipment").ToList();
+            }
+            else
+            {
+                result =
+                        _unit.shipmentsProducts.GetAll(a =>
+                        a.Shipment.MerchanId == user,
+                        "Shipment").ToList();
+            }
+            
+            return View(result);
         }
         [HttpGet]
-        public IActionResult Update(int id)
+        [Authorize(Roles = $"{SD.Role_Merchant},{SD.Role_Admin}")]
+        public async Task<IActionResult> Update(int id)
         {
             var shipmentProducts = _unit.shipmentsProducts.
                 GetFirstOrDeafult(a => a.Id == id, "Shipment", false);
-            var customerRole = _context.Roles.
-                FirstOrDefault(a => a.Name == SD.Role_Customer);
-            var userRoles = _context.UserRoles.
-                Where(x => x.RoleId == customerRole.Id).ToList();
-
-            var users = new List<ApplicationUser>();
-            foreach (var item in userRoles)
+            var merchantId = User.
+                FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var currentUser = await _userManager.
+                                FindByEmailAsync(User.
+                                    FindFirstValue(ClaimTypes.Email));
+            var result = new List<Shipment>();
+            if (await _userManager.IsInRoleAsync(currentUser, 
+                SD.Role_Admin))
             {
-                users.Add(
-                    _context.Users.Where(a => a.Id == item.UserId).First()
-                    );
+                result = _unit.shipments.
+                         GetAll().ToList();
+            }
+            else
+            {
+                result =
+                        _unit.shipments.GetAll(a =>
+                        a.MerchanId == user).ToList();
             }
             var shpmentProductVM = new ShpmentProductVM()
             {
+                ShipmentId = shipmentProducts.ShipmentId,
                 ShipmentsProducts = shipmentProducts,
-                Shipments = new SelectList(_unit.shipments.GetAll(), "Id", "OrderNumber", shipmentProducts.ShipmentId)
+                Shipments = new SelectList(result, "Id", "OrderNumber", 
+                shipmentProducts.ShipmentId)
             };
 
-            return View(shipmentProducts);
+            return View(shpmentProductVM);
         }
         [HttpPost]
+        [Authorize(Roles = $"{SD.Role_Merchant},{SD.Role_Admin}")]
         [ValidateAntiForgeryToken]
         public IActionResult Update(ShpmentProductVM shpmentProductVM)
         {
@@ -69,27 +98,39 @@ namespace SahamProject.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        [Authorize(Roles = $"{SD.Role_Merchant},{SD.Role_Admin}")]
+        public async Task<IActionResult> Create()
         {
-            var customerRole = _context.Roles.FirstOrDefault(a => a.Name == SD.Role_Customer);
-            var userRoles = _context.UserRoles.Where(x => x.RoleId == customerRole.Id).ToList();
-            var users = new List<ApplicationUser>();
-            foreach (var item in userRoles)
+            var merchantId = User.
+                FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var currentUser = await _userManager.
+                                FindByEmailAsync(User.
+                                    FindFirstValue(ClaimTypes.Email));
+            var result = new List<Shipment>();
+            if (await _userManager.IsInRoleAsync(currentUser,
+                SD.Role_Admin))
             {
-                users.Add(
-                    _context.Users.Where(a => a.Id == item.UserId).First()
-                    );
+                result = _unit.shipments.
+                         GetAll().ToList();
+            }
+            else
+            {
+                result =
+                        _unit.shipments.GetAll(a =>
+                        a.MerchanId == user).ToList();
             }
             var shpmentProductVM = new ShpmentProductVM()
             {
                 ShipmentsProducts =new ShipmentsProduct(),
-                Shipments = new SelectList(_unit.shipments.GetAll(), "Id", "OrderNumber")
+                Shipments = new SelectList(result, "Id", "OrderNumber")
             };
 
             return View(shpmentProductVM);
         }
 
         [HttpPost]
+        [Authorize(Roles = $"{SD.Role_Merchant},{SD.Role_Admin}")]
         [ValidateAntiForgeryToken]
         public IActionResult Create(ShpmentProductVM shpmentProductVM)
         {
@@ -104,13 +145,15 @@ namespace SahamProject.Web.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = $"{SD.Role_Merchant},{SD.Role_Admin}")]
         public IActionResult Delete(int? id)
         {
             if (id == 0 && id == null)
             {
                 return NotFound();
             }
-            var shipmentProductsId = _unit.shipmentsProducts.GetFirstOrDeafult(u => u.Id == id);
+            var shipmentProductsId = _unit.shipmentsProducts.
+                                  GetFirstOrDeafult(u => u.Id == id);
             if (shipmentProductsId == null)
             {
                 return NotFound();
@@ -119,6 +162,7 @@ namespace SahamProject.Web.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = $"{SD.Role_Merchant},{SD.Role_Admin}")]
         [ValidateAntiForgeryToken]
         public IActionResult DeletePost(int? id)
         {

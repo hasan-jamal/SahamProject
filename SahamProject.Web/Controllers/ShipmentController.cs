@@ -59,7 +59,7 @@ namespace SahamProject.Web.Controllers
             var customerRole = _context.Roles.
                 FirstOrDefault(a => a.Name == SD.Role_Customer);
             var userRoles = _context.UserRoles.
-                Where(x => x.RoleId == customerRole.Id).ToList();
+                Where(x => x.RoleId == customerRole!.Id).ToList();
             var users = new List<ApplicationUser>();
             foreach (var item in userRoles)
             {
