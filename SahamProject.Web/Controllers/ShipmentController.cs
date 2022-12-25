@@ -112,5 +112,38 @@ namespace SahamProject.Web.Controllers
             _unit.Save();
             return RedirectToAction(nameof(Index));
         }
+
+
+        [HttpGet]
+        [Authorize(Roles = SD.Role_Merchant)]
+        public IActionResult Delete(int? id)
+        {
+            if (id == 0 && id == null)
+            {
+                return NotFound();
+            }
+            var contactsId = _unit.shipments.GetFirstOrDeafult(u => u.Id == id);
+            if (contactsId == null)
+            {
+                return NotFound();
+            }
+            return View(contactsId);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = SD.Role_Merchant)]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePost(int? id)
+        {
+            var shipment = _unit.shipments.GetFirstOrDeafult(u => u.Id == id);
+            if (shipment == null)
+            {
+                return NotFound();
+            }
+            _unit.shipments.Remove(shipment);
+            _unit.Save();
+            TempData["success"] = "Delete contacts is successfully";
+            return RedirectToAction("Index");
+        }
     }
 }

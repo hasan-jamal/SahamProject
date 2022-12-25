@@ -17,7 +17,6 @@ namespace SahamProject.Web.Controllers
         public IActionResult Index()
         {
             IEnumerable<Contact> objectcontactsList = _unitOfWork.contacts.GetAll();
-
             return View(objectcontactsList);
         }
         public IActionResult Create()
