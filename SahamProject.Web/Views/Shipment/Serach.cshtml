@@ -1,6 +1,4 @@
-﻿@model IEnumerable<Shipment>
-
-@{
+﻿@{
     ViewBag.Title = "Track Shipment";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -11,22 +9,60 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-4">
-                            <form action="">
+                            <form id="searchForm" asp-action="SearchOrderNumber" method="post">
                                 <div class="form-group">
-                                    <input type="text" class="search-input form-control text-center"
+                                    <input id="searchValue" type="text" class="search-input form-control text-center"
                                         placeholder="ex 12345678901234 مثال">
                                     <button type="submit"> تتبع | Track </button>
                                 </div>
                             </form>
                         </div>
                         <div class="col-md-8">
-                            <div class="result">
+                            <div id="result" class="result">
                                 <h1>لا يوجد نتائج</h1>
                             </div>
                         </div>
                     </div>
                 </div>
       </section>
-     <div class="container my-5">
+ <script>
+     const searchForm = document.querySelector("#searchForm");
+     const result = document.querySelector("#result");
+     searchForm.addEventListener("submit",(event)=>{
+         event.preventDefault();
+     const searchValue = document.getElementById("searchValue");
+         console.log(searchValue.value);
+         fetch("SearchOrderNumber", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({Search : searchValue.value})
+    }).then((response) => {
+        console.log(response.status);
+        return response.json();
+    }).then(data => {
+        searchValue.value = "";
+        result.innerHTML = "<h1>لا يوجد نتائج</h1>";
+        if(data.customerName == null)return;
+        console.log(data);
+        result.innerHTML = 
+        "<p>Customer Name: "+data.customerName+"</p>"+
+        "<p>Merchan Name: "+data.merchanName+"</p>"+
+        "<p>Order Number: "+data.orderNumber+"</p>"+
+        "<p>Price: "+data.price+"</p>"+
+        "<p>Status: "+data.statusName+"</p>"+
+        "<p>Shipment Type: "+data.shipmentTypeId+"</p>";
 
- 
+        result.innerHTML += 
+        data.shipmentsProducts.map(el => 
+            `<tr><td>${el.width}</td>
+            <td>${el.weight}</td>
+            <td>${el.SPLength}</td>
+            <td>${el.isBreakable}</td>
+            <td>${el.descritdtion}</td>
+            <td>${el.height}</p></tr>`)
+                    .join("\n");
+    });
+     });
+ </script>

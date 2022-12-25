@@ -31,9 +31,38 @@ namespace SahamProject.Web.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult ViewCategory(string searchString)
-          => View(_unit.shipments.GetFirstOrDeafult(a => a.OrderNumber.ToLower() == searchString.ToLower(), "Customer,Merchan,Status,ShipmentsProducts", false));
-
+        [HttpPost]
+        public IActionResult SearchOrderNumber([FromBody] SearchModel searchModel)
+        {
+            var result = _unit.shipments.GetFirstOrDeafult(
+                a => a.OrderNumber.ToLower() == searchModel.Search.ToLower(),
+                "Customer,Merchan,Status,ShipmentsProducts", false);
+            if(result == null) return Json("Not found");
+            var shipmentSearchResultVM = new ShipmentSearchResultVM()
+            {
+                CustomerName = result.Customer?.Name!,
+                MerchanName = result.Merchan?.Name!,
+                Price = result.Price ?? 0.0,
+                OrderNumber = result.OrderNumber,
+                ShipmentTypeId= result.ShipmentTypeId,
+                StatusName = result.Status?.Name!
+            };
+            foreach (var item in result.ShipmentsProducts)
+            {
+                shipmentSearchResultVM.shipmentsProducts.Add(
+                    new ShipmentsProductSearchVM()
+                    {
+                        Description = item.Description,
+                        Height = item.Height,
+                        Weight = item.Weight,
+                        SPLength = item.Length,
+                        IsBreakable = item.IsBreakable,
+                        Width = item.Width
+                    }
+                    );
+            }
+            return Json(shipmentSearchResultVM);
+        }
 
         [HttpGet]
         [AllowAnonymous]
