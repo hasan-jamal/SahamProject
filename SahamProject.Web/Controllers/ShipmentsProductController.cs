@@ -29,7 +29,6 @@ namespace SahamProject.Web.Controllers
             return View(_unit.shipmentsProducts.GetAll(a => a.Shipment.MerchanId == user, "Shipment"));
         }
         [HttpGet]
-        [Authorize(Roles = SD.Role_Merchant)]
         public IActionResult Update(int id)
         {
             var shipmentProducts = _unit.shipmentsProducts.
@@ -62,7 +61,7 @@ namespace SahamProject.Web.Controllers
             shipmentProduct = shpmentProductVM.ShipmentsProducts;
             shipmentProduct.ShipmentId = shpmentProductVM.ShipmentId;
 
-            if (shipmentProduct == null || shpmentProductVM == null || shpmentProductVM.ShipmentsProducts.Shipment.MerchanId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if (shipmentProduct == null || shpmentProductVM == null)
                 return View(shpmentProductVM);
             _unit.shipmentsProducts.Update(shipmentProduct);
             _unit.Save();
@@ -91,13 +90,11 @@ namespace SahamProject.Web.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = SD.Role_Merchant)]
         [ValidateAntiForgeryToken]
         public IActionResult Create(ShpmentProductVM shpmentProductVM)
         {
             var shipmentProducts = new ShipmentsProduct();
             shipmentProducts = shpmentProductVM.ShipmentsProducts;
-            shipmentProducts.Shipment.MerchanId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             shipmentProducts.ShipmentId = shpmentProductVM.ShipmentId;
             if (shipmentProducts == null || shpmentProductVM == null) return View(shipmentProducts);
             _unit.shipmentsProducts.Add(shipmentProducts);

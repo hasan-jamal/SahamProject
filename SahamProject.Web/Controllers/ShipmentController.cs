@@ -22,11 +22,19 @@ namespace SahamProject.Web.Controllers
             _userManager = userManager;
             _context = context;
         }
-        [HttpGet]
-        public IActionResult Serach()
+
+        public ActionResult ViewCategory(string searchString)
         {
-            return View();
+            var shipments = from m in _context.Shipments
+                             select m;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                shipments = shipments.Where(s => s.OrderNumber.Contains(searchString));
+            }
+
+            return View(shipments);
         }
+
         [HttpGet]
         public IActionResult GetShipmentByOrderNumber(string orderNumber)
           => View(_unit.shipments.GetFirstOrDeafult(a => a.OrderNumber.ToLower() == orderNumber.ToLower(), "Customer,Merchan,Status,ShipmentsProducts", false));

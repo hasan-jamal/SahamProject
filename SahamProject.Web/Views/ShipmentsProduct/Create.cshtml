@@ -40,14 +40,18 @@
                               <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label" asp-for="@Model.ShipmentsProducts.Weight"></label>
-                                    <input type="text" asp-for="@Model.ShipmentsProducts.Width" class="form-Weight" placeholder="Add Weight">
+                                    <input type="text" asp-for="@Model.ShipmentsProducts.Weight" class="form-control" placeholder="Add Weight">
                                 </div>
                             </div>
                             
                               <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label" asp-for="@Model.ShipmentsProducts.IsBreakable"></label>
-                                    <input type="text" asp-for="@Model.ShipmentsProducts.IsBreakable" class="form-Weight" placeholder="Add IsBreakable">
+                                     <select class="form-control"  asp-for="@Model.ShipmentsProducts.IsBreakable" >
+                                         <option value="1">true</option>
+                                         <option value="0">false</option>
+                                     </select>
+                                  
                                 </div>
                             </div>
 

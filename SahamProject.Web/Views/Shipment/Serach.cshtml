@@ -1,12 +1,12 @@
-﻿   
- 
+﻿@model Shipment
+
 @{
     ViewBag.Title = "Track Shipment";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
-    <section class="section-Shipment">
+@*    <section class="section-Shipment">
                 <h1>Track Shipment تتبع الشحنة</h1>
                 <div class="container">
                     <div class="row">
@@ -26,4 +26,50 @@
                         </div>
                     </div>
                 </div>
-      </section>
+      </section>*@
+
+
+      <input type="text" id="search" placeholder="Search by category Name"/> 
+
+        <table id="catList" class="table table-bordered table-striped text-center" style="margin-top:20px;height:auto">
+                    <thead class="text-uppercase" style="font-weight:bold; font-size:20px;">
+                        <tr>
+                            <td>Category Name</td>
+                            <td>Category Image</td>
+                          
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var item in Model)
+                        {
+                            <tr class="text-center" id="row_@item.Id">
+                                <td style="padding-top:36px;font-size:20px;">@item.OrderNumber</td>
+                                <td style="padding-top:36px;font-size:20px;">@item.Merchan.Name</td>
+                            
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <script>
+                    
+                $(document).ready(function () {
+                        $("#search").keyup(function () {
+                            $("#catList").hide("fast");
+
+                            var newStrSearch = $("#search").val();
+
+                            //var newStrSearch = $("#search").val();
+
+
+                            $.ajax({
+                                type: "POST",
+                                url: "/Shipment/ViewCategory",
+                                data: { searchString: newStrSearch },
+                                success: function (categories) {
+                                    //code to show result data in View page
+                                }
+                            });
+                        });
+                    });
+                </script>
