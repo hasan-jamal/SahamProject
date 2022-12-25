@@ -22,7 +22,11 @@ namespace SahamProject.Web.Controllers
             _userManager = userManager;
             _context = context;
         }
-
+        [HttpGet]
+        public IActionResult Serach()
+        {
+            return View();
+        }
         public ActionResult ViewCategory(string searchString)
         {
             var shipments = from m in _context.Shipments
