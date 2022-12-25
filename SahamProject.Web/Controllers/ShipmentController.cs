@@ -28,16 +28,8 @@ namespace SahamProject.Web.Controllers
             return View();
         }
         public ActionResult ViewCategory(string searchString)
-        {
-            var shipments = from m in _context.Shipments
-                             select m;
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                shipments = shipments.Where(s => s.OrderNumber.Contains(searchString));
-            }
+          => View(_unit.shipments.GetFirstOrDeafult(a => a.OrderNumber.ToLower() == searchString.ToLower(), "Customer,Merchan,Status,ShipmentsProducts", false));
 
-            return View(shipments);
-        }
 
         [HttpGet]
         public IActionResult GetShipmentByOrderNumber(string orderNumber)
