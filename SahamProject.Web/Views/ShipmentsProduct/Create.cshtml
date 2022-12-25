@@ -1,42 +1,60 @@
-﻿@model ShipmentVM 
+﻿@model ShpmentProductVM 
 
 @{
-    ViewBag.Title = "Create Shipment";
+    ViewBag.Title = "Create Shpment Product";
     Layout = "~/Views/Shared/_dashboard.cshtml";
 }
 
-        <h1 class="h1-header mt-5"> Create Shipment</h1>
+        <h1 class="h1-header mt-5"> Create Shipment Product</h1>
                 <div class="container text-home">
                     <form asp-action="Create" method="post"role="form">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label" asp-for="@Model.Shipment.Price"></label>
-                                    <input type="text" asp-for="@Model.Shipment.Price" class="form-control" placeholder="Add price">
+                                    <label class="form-label" asp-for="@Model.ShipmentsProducts.Description"></label>
+                                    <input type="text" asp-for="@Model.ShipmentsProducts.Description" class="form-control" placeholder="Add Description">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label" asp-for="@Model.Shipment.OrderNumber"></label>
-                                    <input type="text" asp-for="@Model.Shipment.OrderNumber" class="form-control" placeholder="Add order number">
+                                    <label class="form-label" asp-for="@Model.ShipmentsProducts.Width"></label>
+                                    <input type="text" asp-for="@Model.ShipmentsProducts.Width" class="form-control" placeholder="Add Width">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+
+                              <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label" asp-for="@Model.Customers"></label>
-                                    <select class="form-control"  asp-for="@Model.CustomersId" asp-items="@Model.Customers" ></select>
+                                    <label class="form-label" asp-for="@Model.ShipmentsProducts.Length"></label>
+                                    <input type="text" asp-for="@Model.ShipmentsProducts.Length" class="form-control" placeholder="Add Length">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+
+                              <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label" asp-for="@Model.Status"></label>
-                                    <select asp-items="@Model.Status" class="form-control" asp-for="@Model.StatusId"></select>
+                                    <label class="form-label" asp-for="@Model.ShipmentsProducts.Height"></label>
+                                    <input type="text" asp-for="@Model.ShipmentsProducts.Height" class="form-control" placeholder="Add Height">
                                 </div>
                             </div>
+
+
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" asp-for="@Model.ShipmentsProducts.Weight"></label>
+                                    <input type="text" asp-for="@Model.ShipmentsProducts.Width" class="form-Weight" placeholder="Add Weight">
+                                </div>
+                            </div>
+                            
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" asp-for="@Model.ShipmentsProducts.IsBreakable"></label>
+                                    <input type="text" asp-for="@Model.ShipmentsProducts.IsBreakable" class="form-Weight" placeholder="Add IsBreakable">
+                                </div>
+                            </div>
+
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label" asp-for="@Model.Shipment.ShipmentTypeId">Shipment Type Id</label>
-                                    <input type="text" asp-for="@Model.Shipment.ShipmentTypeId" class="form-control" placeholder="Add shipment type Id">
+                                    <label class="form-label" asp-for="@Model.Shipments"></label>
+                                    <select class="form-control"  asp-for="@Model.ShipmentId" asp-items="@Model.Shipments" ></select>
                                 </div>
                             </div>
                             <div class="col-md-12 mt-4">
