@@ -1,42 +1,58 @@
-﻿@model Contact 
+﻿@model ShipmentsProduct
+
 @{
-        Layout = "~/Views/Shared/_dashboard.cshtml";
+    ViewBag.Title = "Delete Shpment Product";
+    Layout = "~/Views/Shared/_dashboard.cshtml";
 }
-<div class="container p-3">
-     <h1 class="h1-header mt-5">Delete Contact</h1>
-<form method="post" class="mb-5" asp-action="Delete">
-    <input asp-for="Id" hidden />
-    <div class="border p-3 mt-4">
-        <div class="row pb-2">
-          
-            <hr/>
-    </div>
-    <div asp-validation-summary="All"></div>
-    <div class="row">
-        <div class="col-md-4">
-             <div class="mb-3">
-        <label asp-for="FirstName"></label>
-        <input asp-for="FirstName" disabled class="form-control" />
-      </div>
-        </div>
-         <div class="col-md-4">
-         <div class="mb-3">
-        <label asp-for="LastName"></label>
-        <input asp-for="LastName" disabled class="form-control" />
-      </div>
-        </div>
-         <div class="col-md-4">
-        <div class="mb-3">
-            <label asp-for="Email"></label>
-            <input asp-for="Email" disabled class="form-control" />
-          </div>
-        </div>
 
-    </div>
-   
-    <button type="submit" class="btn-danger btn" style="width:150px">Delete</button>
-     <a class="btn btn-secondary" asp-area="Admin" asp-controller="CoverType" asp-action="Index">Back To List</a>
+        <h1 class="h1-header mt-5"> Delete Shipment Product</h1>
+                <div class="container text-home">
+                    <form asp-action="Delete" method="post"role="form">
+                        <input hidden asp-for="@Model.Id"/>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" asp-for="@Model.Description"></label>
+                                    <input type="text" disabled asp-for="@Model.Description" class="form-control" placeholder="Add Description">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" asp-for="@Model.Width"></label>
+                                    <input type="text" disabled asp-for="@Model.Width" class="form-control" placeholder="Add Width">
+                                </div>
+                            </div>
 
-  </div>
-</form>
-  </div>
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" asp-for="@Model.Length"></label>
+                                    <input type="text" disabled asp-for="@Model.Length" class="form-control" placeholder="Add Length">
+                                </div>
+                            </div>
+
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" asp-for="@Model.Height"></label>
+                                    <input type="text" disabled asp-for="@Model.Height" class="form-control" placeholder="Add Height">
+                                </div>
+                            </div>
+
+
+                              <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label" asp-for="@Model.Weight"></label>
+                                    <input type="text" disabled asp-for="@Model.Weight" class="form-control" placeholder="Add Weight">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mt-4">
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-success w-30">Update Shipment</button>
+                                    <button type="reset" class="btn btn-danger">Reset</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>

@@ -1,0 +1,5 @@
+﻿@inject UserManager<ApplicationUser> userManager;
+ 
+<h1 class="h1-design d-block ml-auto "><img src="~/assets/images/profile.png" alt="" width="40"
+            class="img-design mx-2"> Hello @userManager.GetUserAsync(User).Result.Name
+</h1>
