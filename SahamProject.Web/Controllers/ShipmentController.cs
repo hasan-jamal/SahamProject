@@ -11,6 +11,7 @@ using System.Security.Claims;
 
 namespace SahamProject.Web.Controllers
 {
+    [Authorize(Roles = $"{SD.Role_Merchant},{SD.Role_Admin}")]
     public class ShipmentController : Controller
     {
         private readonly IUnitOfWork _unit;
@@ -23,15 +24,19 @@ namespace SahamProject.Web.Controllers
             _context = context;
         }
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Serach()
         {
             return View();
         }
+
+        [AllowAnonymous]
         public ActionResult ViewCategory(string searchString)
           => View(_unit.shipments.GetFirstOrDeafult(a => a.OrderNumber.ToLower() == searchString.ToLower(), "Customer,Merchan,Status,ShipmentsProducts", false));
 
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult GetShipmentByOrderNumber(string orderNumber)
           => View(_unit.shipments.GetFirstOrDeafult(a => a.OrderNumber.ToLower() == orderNumber.ToLower(), "Customer,Merchan,Status,ShipmentsProducts", false));
 
@@ -40,10 +45,21 @@ namespace SahamProject.Web.Controllers
         public IActionResult Index()
         {
             var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return View(_unit.shipments.GetAll(a => a.MerchanId == user, "Customer,Merchan,Status,ShipmentsProducts"));
+            var result = new List<Shipment>();
+            if (User.IsInRole(SD.Role_Admin))
+            {
+                result = _unit.shipments.
+                         GetAll(null, "Customer,Merchan,Status,ShipmentsProducts").ToList();
+            }
+            else
+            {
+                result =
+                        _unit.shipments.GetAll(a =>
+                        a.MerchanId == user, "Customer,Merchan,Status,ShipmentsProducts").ToList();
+            }
+            return View(result);
         }
         [HttpGet]
-        [Authorize(Roles = SD.Role_Merchant)]
         public IActionResult Update(int id)
         {
             var shipment = _unit.shipments.
