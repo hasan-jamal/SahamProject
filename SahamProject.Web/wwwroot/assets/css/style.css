@@ -697,6 +697,19 @@ background-color:#ebebeb;
     background-color: #F37121;
     color: #fff;
 }
+.image-style {
+    display: block;
+    margin: auto;
+    width: 50%;
+}
+
+.text-erro {
+    text-align: center;
+    padding: 1rem 0px;
+    font-size: 45px;
+    font-family: 'Cairo';
+    font-weight: bold;
+}
 @media (max-width:1000px) {
   .flex-footer{
     flex-direction: column;
@@ -713,4 +726,7 @@ background-color:#ebebeb;
    .flex-col{
     flex-direction: column;
    }
+    .image-style {
+        width: 90%;
+    }
 }

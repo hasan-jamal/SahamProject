@@ -25,7 +25,7 @@ namespace SahamProject.Web.Controllers
 
             return View(objectServicesList);
         }
-
+        [AllowAnonymous]
         public IActionResult ServicePage()
         {
             IEnumerable<Service> objectcontactsList = _unitOfWork.services.GetAll();
