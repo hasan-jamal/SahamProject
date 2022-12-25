@@ -71,6 +71,7 @@ namespace SahamProject.Web.Controllers
 
                 }
             }
+         
 
             return RedirectToAction(nameof(Users));
         }
@@ -99,7 +100,7 @@ namespace SahamProject.Web.Controllers
                     if (await _userManager.IsInRoleAsync(user, SD.Role_Merchant))
                         return RedirectToAction("Index", "Shipment");
 
-                    if (await _userManager.IsInRoleAsync(user, SD.Role_Merchant))
+                    if (await _userManager.IsInRoleAsync(user, SD.Role_Admin))
                         return RedirectToAction("Account", "Users");
                     return RedirectToAction("Index", "Home");
                 }
