@@ -90,6 +90,37 @@ namespace SahamProject.Web.Controllers
             return View(serviceVM);
         }
 
+        [HttpGet]
+        public IActionResult Delete(int? id)
+        {
+            if (id == 0 && id == null)
+            {
+                return NotFound();
+            }
+            var servicesId = _unitOfWork.services.GetFirstOrDeafult(u => u.Id == id);
+            if (servicesId == null)
+            {
+                return NotFound();
+            }
+            return View(servicesId);
+        }
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePost(int? id)
+        {
+            var services = _unitOfWork.services.GetFirstOrDeafult(u => u.Id == id);
+            // var contacts = _db.contacts.FirstOrDefault(c => c.Id == id);
+            //var contacts = _db.contacts.SingleOrDefault(c => c.Id == id);
+            if (services == null)
+            {
+                return NotFound();
+            }
+            _unitOfWork.services.Remove(services);
+            _unitOfWork.Save();
+            TempData["success"] = "Delete service is successfully";
+            return RedirectToAction("Index");
+        }
+
 
 
 
@@ -101,23 +132,23 @@ namespace SahamProject.Web.Controllers
             return Json(new { data = allCategories });
         }
 
-        [HttpDelete]
-        public IActionResult Delete(int? id)
-        {
-            var category = _unitOfWork.services.GetFirstOrDeafult(u => u.Id == id);
-            if (category == null)
-            {
-                return Json(new { success = false, message = "Error While deleting" });
-            }
-            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, category.ImageUrl.TrimStart('\\'));
-            if (System.IO.File.Exists(oldImagePath))
-            {
-                System.IO.File.Delete(oldImagePath);
-            }
-            _unitOfWork.services.Remove(category);
-            _unitOfWork.Save();
-            return Json(new { success = true, message = "Delete Successful !" });
-        }
+        //[HttpDelete]
+        //public IActionResult Delete(int? id)
+        //{
+        //    var category = _unitOfWork.services.GetFirstOrDeafult(u => u.Id == id);
+        //    if (category == null)
+        //    {
+        //        return Json(new { success = false, message = "Error While deleting" });
+        //    }
+        //    var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, category.ImageUrl.TrimStart('\\'));
+        //    if (System.IO.File.Exists(oldImagePath))
+        //    {
+        //        System.IO.File.Delete(oldImagePath);
+        //    }
+        //    _unitOfWork.services.Remove(category);
+        //    _unitOfWork.Save();
+        //    return Json(new { success = true, message = "Delete Successful !" });
+        //}
         #endregion
     }
 }
