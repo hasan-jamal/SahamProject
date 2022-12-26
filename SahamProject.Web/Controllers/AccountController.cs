@@ -101,7 +101,7 @@ namespace SahamProject.Web.Controllers
                         return RedirectToAction("Index", "Shipment");
 
                     if (await _userManager.IsInRoleAsync(user, SD.Role_Admin))
-                        return RedirectToAction("Users", "Account");
+                        return RedirectToAction("Index", "Home");
                     return RedirectToAction("Index", "Home");
                 }
             }

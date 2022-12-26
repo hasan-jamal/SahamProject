@@ -17,22 +17,36 @@ else
 {
     @*User Profile section*@
        <li class="menu-item">
-           <a class="nav__link">
-                    <i class="bi bi-person-badge"></i> Hello @userManager.GetUserAsync(User).Result.Name
-           </a>
-           
-     </li>
+          
+           <label class="dropdown nav__link">
+              <div class="dd-button">
+            <i class="bi bi-person-badge"></i> Hello @userManager.GetUserAsync(User).Result.Name
+              </div>
 
-        <li class="menu-item">
-            <a class="nav__link">
-                <form asp-controller="Account" asp-action="Logout">
+              <input type="checkbox" class="dd-input" id="test">
+
+              <ul class="dd-menu">
+                <li>
+                    @if (User.Identity.IsAuthenticated && (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Merchant))){
+                    <a asp-controller="Shipment" asp-action="Index">Dashboard</a>
+                    }
+
+                </li>
+                <li> 
+                    <form asp-controller="Account" asp-action="Logout">
                     <button type="submit" class="btn btn-danger">
                           <i class="bi bi-box-arrow-in-right"></i> Log out
                     </button>
                  </form>
-            </a>
-
+                 </li>
+   
+              </ul>
+  
+            </label>
+            
      </li>
+
+   
 
       
 }
