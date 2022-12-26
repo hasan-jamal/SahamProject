@@ -47,21 +47,41 @@
         if(data.customerName == null)return;
         console.log(data);
         result.innerHTML = 
-        "<p>Customer Name: "+data.customerName+"</p>"+
-        "<p>Merchan Name: "+data.merchanName+"</p>"+
-        "<p>Order Number: "+data.orderNumber+"</p>"+
-        "<p>Price: "+data.price+"</p>"+
-        "<p>Status: "+data.statusName+"</p>"+
-        "<p>Shipment Type: "+data.shipmentTypeId+"</p>";
+        `<h3 class='text-center pb-5 pt-3 font'><b>Order Number:</b>${data.orderNumber}</h3>
+        <div class='d-flex justify-content-between font'>
+            <div>
+                <p><b>Customer Name: </b> ${data.customerName}</p>
+                <p><b>Merchan Name  </b> :${data.merchanName}</p>
+                <p><b>Price:</b>  ${data.price}</p>
+         </div>
+            <div>
+                <p><b>Status: </b> ${data.statusName}</p>
+                <p><b>Shipment Type: </b> ${data.shipmentTypeId}</p>
+            </div>
+        </div>
+        `;
 
         result.innerHTML += 
         data.shipmentsProducts.map(el => 
-            `<tr><td>${el.width}</td>
+            `<table class="table table-bordered. text-left table-font">
+            <thead>
+            <tr><th>width</th>
+            <th>weight</th>
+            <th>SPLength</td>
+            <th>isBreakable</th>
+            <th>descritdtion</th>
+            <th>height</th></tr>
+            </thead>
+            <tbody>
+            <tr><td>${el.width}</td>
             <td>${el.weight}</td>
             <td>${el.SPLength}</td>
             <td>${el.isBreakable}</td>
-            <td>${el.descritdtion}</td>
-            <td>${el.height}</p></tr>`)
+            <td>${el.description}</td>
+            <td>${el.height}</td></tr>
+            </tbody>
+            
+            </table>`)
                     .join("\n");
     });
      });

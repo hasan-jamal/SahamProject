@@ -710,6 +710,11 @@ background-color:#ebebeb;
     font-family: 'Cairo';
     font-weight: bold;
 }
+.font,
+.table-font th,
+.table-font td {
+    font-family: 'Cairo';
+}
 @media (max-width:1000px) {
   .flex-footer{
     flex-direction: column;
