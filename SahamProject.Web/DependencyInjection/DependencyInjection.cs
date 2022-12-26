@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SahamProject.Web.Mapper;
 using SahamProject.Web.Models;
 
 namespace SahamProject.Web.DependencyInjection
@@ -20,6 +22,12 @@ namespace SahamProject.Web.DependencyInjection
             services.AddIdentity<ApplicationUser, IdentityRole>()
                .AddEntityFrameworkStores<SahamProjectContext>()
                .AddDefaultTokenProviders();
+            services.AddSingleton(
+                       new MapperConfiguration(
+                       cfg => { cfg.AddProfile(new Mapping()); }
+                       ).
+                       CreateMapper()
+                       );
             return services;
         }
         public static IServiceCollection AddAuthLayer(this IServiceCollection services)
