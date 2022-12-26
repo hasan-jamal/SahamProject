@@ -35,7 +35,7 @@ namespace SahamProject.Web.Controllers
                 _unitOfWork.contacts.Add(contact);
                 _unitOfWork.Save();
                 TempData["success"] = "Add Information Contact is successfully";
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Home");
             }
             return View(contact);
         }
@@ -67,7 +67,7 @@ namespace SahamProject.Web.Controllers
             }
             _unitOfWork.contacts.Remove(contacts);
             _unitOfWork.Save();
-            TempData["success"] = "Delete contacts is successfully";
+            TempData["success"] = "Delete contact is successfully";
             return RedirectToAction("Index");
         }
     }

@@ -8,9 +8,29 @@
         </a>
         </li>
         <li class="menu-item">
-            <a class="nav__link" asp-controller="Account" asp-action="Register">
-                <i class="bi bi-person-plus"></i> Register
-            </a>
+               <label class="dropdown nav__link">
+              <div class="dd-button">
+           Register
+              </div>
+
+              <input type="checkbox" class="dd-input" id="test">
+
+              <ul class="dd-menu">
+                <li>
+                 <a asp-controller="Account" asp-action="Register">
+                    <i class="bi bi-person-plus"></i> Register Merchant
+                 </a>
+                </li>
+               <li>
+                 <a asp-controller="Account" asp-action="RegisterCustomer">
+                    <i class="bi bi-person-plus"></i> Register Customer
+                 </a>
+                </li>
+   
+              </ul>
+  
+            </label>
+           
         </li>
 }   
 else
