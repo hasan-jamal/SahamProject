@@ -48,7 +48,22 @@
                     <i class="fa-solid fa-walkie-talkie"></i>
                     Shipments Products Component
                 </a>
-                <partial name="_IdentityDashBoard.cshtml"/>
+                @if (User.Identity.IsAuthenticated && User.IsInRole(SD.Role_Admin))
+                {
+                    <a asp-controller="Service" asp-action="Index" class="dashboard-nav-item  ">
+                        <i class="fa-solid fa-walkie-talkie"></i>
+                        Services Component
+                    </a>
+                    <a asp-controller="Contacts" asp-action="Index" class="dashboard-nav-item">
+                        <i class="fa-solid fa-walkie-talkie"></i>
+                        Contacts Components
+                    </a>
+                    <a asp-controller="Account" asp-action="Users" class="dashboard-nav-item  ">
+                        <i class="fa-solid fa-walkie-talkie"></i>
+                        Users Component
+                    </a>
+
+                }
                
                 <div class="nav-item-divider"></div>
                 <form asp-controller="Account" asp-action="Logout">
@@ -65,7 +80,9 @@
             <header class='dashboard-toolbar'>
                 <div class="d-flex justify-content-between align-items-center flex-elem">
                     <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
-                      <partial name="_IdnetityDash.cshtml"/>
+                  <h1 class="h1-design d-block ml-auto "><img src="~/assets/images/profile.png" alt="" width="40"
+                            class="img-design mx-2"> Hello @userManager.GetUserAsync(User).Result.Name
+                    </h1>
                 </div>
             </header>
 

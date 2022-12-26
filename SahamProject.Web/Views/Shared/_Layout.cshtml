@@ -44,6 +44,9 @@
                     <li class="menu-item"><a class="nav__link" asp-controller="Service" asp-action="ServicePage">Our Services</a></li>
                     <li class="menu-item"><a class="nav__link" asp-controller="Contacts" asp-action="Create">Contact Us</a></li>
                     <li class="menu-item"><a class="nav__link" asp-controller="Shipment" asp-action="Serach">Track Shippment</a></li>
+                    @if (User.Identity.IsAuthenticated && (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Merchant))){
+                    <li class="menu-item"><a class="nav__link" asp-controller="Shipment" asp-action="Index">Dashboard</a></li>
+                    }
                     <partial name="_Identity.cshtml"/>
                 </ul>
 
