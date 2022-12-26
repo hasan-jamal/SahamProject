@@ -1,4 +1,5 @@
-﻿using eTickets.Data.ViewModels;
+﻿using AutoMapper;
+using eTickets.Data.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,11 +19,18 @@ namespace SahamProject.Web.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly SahamProjectContext _context;
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, SahamProjectContext context)
+        private readonly IMapper _mapper; 
+        public AccountController(
+            UserManager<ApplicationUser> userManager, 
+            SignInManager<ApplicationUser> signInManager, 
+            SahamProjectContext context,
+            IMapper mapper
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
+            _mapper = mapper;
         }
 
         public IActionResult AccessDenied() => View();
@@ -137,6 +145,30 @@ namespace SahamProject.Web.Controllers
                 return View(registerVM);
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public IActionResult RegisterCustomer() => View(new RegisterCustomerVM());
+
+        //POST: Acount/RegisterCustomer
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegisterCustomer(RegisterCustomerVM registerVM)
+        {
+            if (!ModelState.IsValid) return View(registerVM);
+
+            var user = await _userManager.FindByEmailAsync(registerVM.EmailAddress);
+            if (user != null) { TempData["Error"] = "The Email Address Already Exist"; return View(registerVM); }
+            var newuser = _mapper.Map<ApplicationUser>(registerVM);
+            var result = await _userManager.CreateAsync(newuser, registerVM.Password);
+            if (!result.Succeeded)
+                return View(registerVM);
+
+            var rseultRole = await _userManager.AddToRoleAsync(newuser, SD.Role_Customer);
+            if (!rseultRole.Succeeded)
+                return View(registerVM);
+            return RedirectToAction(nameof(Index));
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> Logout()

@@ -16,6 +16,13 @@ namespace SahamProject.Web.Mapper
                  ForMember(x => x.Status, a => a.Ignore()).
                  ReverseMap();
             #endregion
+
+            #region ApplicationUsers
+            CreateMap<RegisterCustomerVM, ApplicationUser>()
+                .ForMember(x=>x.Email, a=> a.MapFrom(e=> e.EmailAddress))
+                .ForMember(x => x.UserName, a => a.MapFrom(e => e.EmailAddress))
+                .ReverseMap();
+            #endregion
         }
     }
 }
