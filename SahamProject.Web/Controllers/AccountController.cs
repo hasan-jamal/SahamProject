@@ -18,27 +18,42 @@ namespace SahamProject.Web.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IUserRoleStore<ApplicationUser> _userRoleStore;
         private readonly SahamProjectContext _context;
-        private readonly IMapper _mapper; 
+        private readonly IMapper _mapper;
+        private readonly RoleManager<ApplicationUser> _roleManager;
         public AccountController(
             UserManager<ApplicationUser> userManager, 
             SignInManager<ApplicationUser> signInManager, 
             SahamProjectContext context,
-            IMapper mapper
+            IMapper mapper,
+            IUserRoleStore<ApplicationUser> userRoleStore,
+            RoleManager<ApplicationUser> roleManager
             )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
             _mapper = mapper;
+            _userRoleStore = userRoleStore;
+            _roleManager = roleManager;
         }
 
         public IActionResult AccessDenied() => View();
 
         [HttpGet]
         [Authorize(Roles = SD.Role_Admin)]
-        public async Task<IActionResult> Users()
-        => View(await _context.Users.ToListAsync());
+        public async Task<IActionResult> Users(string? filter = null)
+        {
+            if (filter != null && await _roleManager.RoleExistsAsync(filter))
+            {
+                var usersRoles = await _userRoleStore.
+                        GetUsersInRoleAsync(filter, CancellationToken.None);
+                return View(usersRoles.ToList());
+            }
+
+            return View(await _context.Users.ToListAsync());
+        }
 
         [HttpGet]
         [Authorize(Roles = SD.Role_Admin)]
