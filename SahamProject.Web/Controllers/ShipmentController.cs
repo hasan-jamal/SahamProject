@@ -120,8 +120,9 @@ namespace SahamProject.Web.Controllers
         [Authorize(Roles = SD.Role_Merchant)]
         public IActionResult Update(ShipmentVM shipmentVM)
         {
+
             var shipment = _mapper.Map<Shipment>(shipmentVM);
-            if (shipment == null || shipmentVM == null || shipmentVM.MerchanId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if (!ModelState.IsValid || shipmentVM.MerchanId != User.FindFirstValue(ClaimTypes.NameIdentifier))
                 return View(shipmentVM);
             _unit.shipments.Update(shipment);
             _unit.Save();

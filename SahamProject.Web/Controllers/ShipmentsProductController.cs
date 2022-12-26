@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,11 +17,13 @@ namespace SahamProject.Web.Controllers
         private readonly IUnitOfWork _unit;
         private readonly SahamProjectContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-        public ShipmentsProductController(IUnitOfWork unit, UserManager<ApplicationUser> userManager, SahamProjectContext context)
+        private readonly IMapper _mapper;
+        public ShipmentsProductController(IUnitOfWork unit, UserManager<ApplicationUser> userManager, SahamProjectContext context, IMapper mapper )
         {
             _unit = unit;
             _userManager = userManager;
             _context = context;
+            _mapper = mapper;   
         } 
 
         [HttpGet]
@@ -72,13 +75,9 @@ namespace SahamProject.Web.Controllers
                         _unit.shipments.GetAll(a =>
                         a.MerchanId == user).ToList();
             }
-            var shpmentProductVM = new ShpmentProductVM()
-            {
-                ShipmentId = shipmentProducts.ShipmentId,
-                ShipmentsProducts = shipmentProducts,
-                Shipments = new SelectList(result, "Id", "OrderNumber", 
-                shipmentProducts.ShipmentId)
-            };
+            var shpmentProductVM = _mapper.Map<ShpmentProductVM>(shipmentProducts);
+            shpmentProductVM.Shipments = new SelectList(result, "Id", "OrderNumber",
+                                             shpmentProductVM.ShipmentId);
 
             return View(shpmentProductVM);
         }
@@ -87,12 +86,11 @@ namespace SahamProject.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Update(ShpmentProductVM shpmentProductVM)
         {
-            var shipmentProduct = new ShipmentsProduct();
-            shipmentProduct = shpmentProductVM.ShipmentsProducts;
-            shipmentProduct.ShipmentId = shpmentProductVM.ShipmentId;
+            var shipmentProduct = _mapper.Map<ShipmentsProduct>(shpmentProductVM);
 
-            if (shipmentProduct == null || shpmentProductVM == null)
+            if (!ModelState.IsValid)
                 return View(shpmentProductVM);
+            
             _unit.shipmentsProducts.Update(shipmentProduct);
             _unit.Save();
             return RedirectToAction(nameof(Index));
@@ -121,11 +119,8 @@ namespace SahamProject.Web.Controllers
                         _unit.shipments.GetAll(a =>
                         a.MerchanId == user).ToList();
             }
-            var shpmentProductVM = new ShpmentProductVM()
-            {
-                ShipmentsProducts =new ShipmentsProduct(),
-                Shipments = new SelectList(result, "Id", "OrderNumber")
-            };
+            var shpmentProductVM = _mapper.Map<ShpmentProductVM>(new ShipmentsProduct());
+            shpmentProductVM.Shipments = new SelectList(result, "Id", "OrderNumber");
 
             return View(shpmentProductVM);
         }
@@ -133,13 +128,34 @@ namespace SahamProject.Web.Controllers
         [HttpPost]
         [Authorize(Roles = $"{SD.Role_Merchant},{SD.Role_Admin}")]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(ShpmentProductVM shpmentProductVM)
+        public async Task<IActionResult> Create(ShpmentProductVM shpmentProductVM)
         {
-            var shipmentProducts = new ShipmentsProduct();
-            shipmentProducts = shpmentProductVM.ShipmentsProducts;
-            shipmentProducts.ShipmentId = shpmentProductVM.ShipmentId;
-            if (shipmentProducts == null || shpmentProductVM == null) return View(shipmentProducts);
-            _unit.shipmentsProducts.Add(shipmentProducts);
+            var shipmentProduct = _mapper.Map<ShipmentsProduct>(shpmentProductVM);
+
+            if (!ModelState.IsValid)
+            {
+                var result = new List<Shipment>();
+                var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var currentUser = await _userManager.
+                                    FindByEmailAsync(User.
+                                        FindFirstValue(ClaimTypes.Email));
+                if (await _userManager.IsInRoleAsync(currentUser,
+                    SD.Role_Admin))
+                {
+                    result = _unit.shipments.
+                             GetAll().ToList();
+                }
+                else
+                {
+                    result =
+                            _unit.shipments.GetAll(a =>
+                            a.MerchanId == user).ToList();
+                }
+                shpmentProductVM.Shipments = new SelectList(result, "Id", "OrderNumber");
+                return View(shpmentProductVM);
+            }
+
+            _unit.shipmentsProducts.Add(shipmentProduct);
             _unit.Save();
             return RedirectToAction(nameof(Index));
         }

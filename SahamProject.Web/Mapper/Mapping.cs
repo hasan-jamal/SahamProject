@@ -23,6 +23,13 @@ namespace SahamProject.Web.Mapper
                 .ForMember(x => x.UserName, a => a.MapFrom(e => e.EmailAddress))
                 .ReverseMap();
             #endregion
+
+            #region ShipmentsProducts
+            CreateMap<ShipmentsProduct, ShpmentProductVM>()
+                .ForMember(dest=> dest.ShipmentId, src=> src.MapFrom(src=> src.ShipmentId))
+                .ForMember(dest => dest.Shipments, src => src.Ignore())
+                .ReverseMap();
+            #endregion
         }
     }
 }

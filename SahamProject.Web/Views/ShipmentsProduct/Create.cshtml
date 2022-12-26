@@ -7,47 +7,48 @@
 
         <h1 class="h1-header mt-5"> Create Shipment Product</h1>
                 <div class="container text-home">
+                    <div class="text-danger" asp-validation-summary="All"></div>
                     <form asp-action="Create" method="post"role="form">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label" asp-for="@Model.ShipmentsProducts.Description"></label>
-                                    <input type="text" asp-for="@Model.ShipmentsProducts.Description" class="form-control" placeholder="Add Description">
+                                    <label class="form-label" asp-for="@Model.Description"></label>
+                                    <input type="text" asp-for="@Model.Description" class="form-control" placeholder="Add Description">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label" asp-for="@Model.ShipmentsProducts.Width"></label>
-                                    <input type="text" asp-for="@Model.ShipmentsProducts.Width" class="form-control" placeholder="Add Width">
+                                    <label class="form-label" asp-for="@Model.Width"></label>
+                                    <input type="text" asp-for="@Model.Width" class="form-control" placeholder="Add Width">
                                 </div>
                             </div>
 
                               <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label" asp-for="@Model.ShipmentsProducts.Length"></label>
-                                    <input type="text" asp-for="@Model.ShipmentsProducts.Length" class="form-control" placeholder="Add Length">
+                                    <label class="form-label" asp-for="@Model.Length"></label>
+                                    <input type="text" asp-for="@Model.Length" class="form-control" placeholder="Add Length">
                                 </div>
                             </div>
 
                               <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label" asp-for="@Model.ShipmentsProducts.Height"></label>
-                                    <input type="text" asp-for="@Model.ShipmentsProducts.Height" class="form-control" placeholder="Add Height">
+                                    <label class="form-label" asp-for="@Model.Height"></label>
+                                    <input type="text" asp-for="@Model.Height" class="form-control" placeholder="Add Height">
                                 </div>
                             </div>
 
 
                               <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label" asp-for="@Model.ShipmentsProducts.Weight"></label>
-                                    <input type="text" asp-for="@Model.ShipmentsProducts.Weight" class="form-control" placeholder="Add Weight">
+                                    <label class="form-label" asp-for="@Model.Weight"></label>
+                                    <input type="text" asp-for="@Model.Weight" class="form-control" placeholder="Add Weight">
                                 </div>
                             </div>
                             
                               <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label" asp-for="@Model.ShipmentsProducts.IsBreakable"></label>
-                                     <select class="form-control"  asp-for="@Model.ShipmentsProducts.IsBreakable" >
+                                    <label class="form-label" asp-for="@Model.IsBreakable"></label>
+                                     <select class="form-control"  asp-for="@Model.IsBreakable" >
                                          <option value="true">true</option>
                                          <option value="false">false</option>
                                      </select>
