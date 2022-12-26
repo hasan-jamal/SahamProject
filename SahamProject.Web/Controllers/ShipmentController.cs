@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json.Linq;
 using SahamProject.Web.DataAccess.IRepository;
 using SahamProject.Web.Models;
 using SahamProject.Web.Utlity;
@@ -161,7 +162,25 @@ namespace SahamProject.Web.Controllers
             shipment.MerchanId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             shipment.StatusId = shipmentVM.StatusId;
             shipment.CustomerId = shipmentVM.CustomersId;
-            if (shipment == null || shipmentVM == null) return View(shipment);
+            var result = _unit.shipments.GetFirstOrDeafult(x =>
+                x.OrderNumber.ToLower() == shipmentVM.Shipment.OrderNumber.ToString().ToLower(),
+                null, false);
+            if (shipment == null || result != null)
+            {
+                var customerRole = _context.Roles.FirstOrDefault(a => a.Name == SD.Role_Customer);
+                var userRoles = _context.UserRoles.Where(x => x.RoleId == customerRole.Id).ToList();
+                var users = new List<ApplicationUser>();
+                foreach (var item in userRoles)
+                {
+                    users.Add(
+                        _context.Users.Where(a => a.Id == item.UserId).First()
+                        );
+                }
+                shipmentVM.Customers = new SelectList(users.ToList(), "Id", "Name");
+                shipmentVM.Status = new SelectList(_unit.status.GetAll(), "Id", "Name");
+
+                return View(shipmentVM);
+            }
             _unit.shipments.Add(shipment);
             _unit.Save();
             return RedirectToAction(nameof(Index));

@@ -7,6 +7,11 @@
 
         <h1 class="h1-header mt-5"> Create Shipment</h1>
                 <div class="container text-home">
+                    <div class="text-danger">
+                        <div asp-validation-summary="All">
+
+                        </div>
+                    </div>
                     <form asp-action="Create" method="post"role="form">
                         <div class="row">
                             <div class="col-md-6">

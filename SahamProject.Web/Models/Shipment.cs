@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SahamProject.Web.DataAccess.IRepository;
+using SahamProject.Web.Extensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,6 +16,7 @@ namespace SahamProject.Web.Models
         public int Id { get; set; }
         public double? Price { get; set; }
         public string? MerchanId { get; set; }
+        //[OrderNumberExist(ErrorMessage = "Already Exist")]
         public string OrderNumber { get; set; }
         public string? CustomerId { get; set; }
         public int StatusId { get; set; }
