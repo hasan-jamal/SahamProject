@@ -7,15 +7,11 @@ namespace SahamProject.Web.Extensions
 {
     public class OrderNumberExistAttribute : ValidationAttribute
     {
-        private readonly string _errorMesage;
-        public OrderNumberExistAttribute(string ERRORMESAGE = "ERROR")
-        {
-            _errorMesage= ERRORMESAGE;
-        }
+        
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
             if (value == null) 
-                return new ValidationResult(_errorMesage);
+                return new ValidationResult(ErrorMessage);
             var _unit = (IUnitOfWork)validationContext
             .GetService(typeof(IUnitOfWork))!;
 
@@ -23,7 +19,7 @@ namespace SahamProject.Web.Extensions
                 x.OrderNumber.ToLower() == value.ToString()!.ToLower(),
                 null, false);
             if (result != null)
-                return new ValidationResult(_errorMesage);
+                return new ValidationResult(ErrorMessage);
 
             return ValidationResult.Success;
 
