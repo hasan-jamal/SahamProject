@@ -18,24 +18,21 @@ namespace SahamProject.Web.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly IUserRoleStore<ApplicationUser> _userRoleStore;
         private readonly SahamProjectContext _context;
         private readonly IMapper _mapper;
-        private readonly RoleManager<ApplicationUser> _roleManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         public AccountController(
             UserManager<ApplicationUser> userManager, 
             SignInManager<ApplicationUser> signInManager, 
             SahamProjectContext context,
             IMapper mapper,
-            IUserRoleStore<ApplicationUser> userRoleStore,
-            RoleManager<ApplicationUser> roleManager
+            RoleManager<IdentityRole> roleManager
             )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
             _mapper = mapper;
-            _userRoleStore = userRoleStore;
             _roleManager = roleManager;
         }
 
@@ -43,12 +40,11 @@ namespace SahamProject.Web.Controllers
 
         [HttpGet]
         [Authorize(Roles = SD.Role_Admin)]
-        public async Task<IActionResult> Users(string? filter = null)
+        public async Task<IActionResult> Users(string? filter)
         {
             if (filter != null && await _roleManager.RoleExistsAsync(filter))
             {
-                var usersRoles = await _userRoleStore.
-                        GetUsersInRoleAsync(filter, CancellationToken.None);
+                var usersRoles = await _userManager.GetUsersInRoleAsync(filter);
                 return View(usersRoles.ToList());
             }
 
