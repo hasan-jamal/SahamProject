@@ -8,19 +8,19 @@
         <h1 class="h1-header mt-5"> Create Shipment</h1>
                 <div class="container text-home">
                     <form asp-action="Update" method="post"role="form">
-                        <input hidden asp-for="@Model.Shipment.Id"/>
+                        <input hidden asp-for="@Model.Id"/>
                         <div class="row">
-                            <input hidden asp-for="@Model.Shipment.MerchanId"/>
+                            <input hidden asp-for="@Model.MerchanId"/>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label" asp-for="@Model.Shipment.Price"></label>
-                                    <input type="text" asp-for="@Model.Shipment.Price" class="form-control" placeholder="Add price">
+                                    <label class="form-label" asp-for="@Model.Price"></label>
+                                    <input type="text" asp-for="@Model.Price" class="form-control" placeholder="Add price">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label" asp-for="@Model.Shipment.OrderNumber"></label>
-                                    <input type="text" asp-for="@Model.Shipment.OrderNumber" class="form-control" placeholder="Add order number">
+                                    <label class="form-label" asp-for="@Model.OrderNumber"></label>
+                                    <input type="text" asp-for="@Model.OrderNumber" class="form-control" placeholder="Add order number">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -37,8 +37,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label" asp-for="@Model.Shipment.ShipmentTypeId">Shipment Type Id</label>
-                                    <input type="text" asp-for="@Model.Shipment.ShipmentTypeId" class="form-control" placeholder="Add shipment type Id">
+                                    <label class="form-label" asp-for="@Model .ShipmentTypeId">Shipment Type Id</label>
+                                    <input type="text" asp-for="@Model.ShipmentTypeId" class="form-control" placeholder="Add shipment type Id">
                                 </div>
                             </div>
                             <div class="col-md-12 mt-4">

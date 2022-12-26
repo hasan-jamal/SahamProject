@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -18,11 +19,13 @@ namespace SahamProject.Web.Controllers
         private readonly IUnitOfWork _unit;
         private readonly SahamProjectContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-        public ShipmentController(IUnitOfWork unit, UserManager<ApplicationUser> userManager, SahamProjectContext context)
+        private readonly IMapper _mapper;
+        public ShipmentController(IMapper mapper,IUnitOfWork unit, UserManager<ApplicationUser> userManager, SahamProjectContext context)
         {
             _unit = unit;
             _userManager = userManager;
             _context = context;
+            _mapper = mapper;
         }
         [HttpGet]
         [AllowAnonymous]
@@ -105,12 +108,10 @@ namespace SahamProject.Web.Controllers
                     _context.Users.Where(a => a.Id == item.UserId).First()
                     );
             }
-            var shipmentVM = new ShipmentVM()
-            {
-                Shipment = shipment,
-                Customers = new SelectList(users.ToList(), "Id", "Name", shipment.CustomerId),
-                Status = new SelectList(_unit.status.GetAll(), "Id", "Name", shipment.StatusId)
-            };
+            var shipmentVM = _mapper.Map<ShipmentVM>(shipment);
+            shipmentVM.Id = shipment.Id;
+            shipmentVM.Customers = new SelectList(users.ToList(), "Id", "Name", shipmentVM.CustomersId);
+            shipmentVM.Status = new SelectList(_unit.status.GetAll(), "Id", "Name", shipment.StatusId);
 
             return View(shipmentVM);
         }
@@ -119,11 +120,8 @@ namespace SahamProject.Web.Controllers
         [Authorize(Roles = SD.Role_Merchant)]
         public IActionResult Update(ShipmentVM shipmentVM)
         {
-            var shipment = new Shipment();
-            shipment = shipmentVM.Shipment;
-            shipment.CustomerId = shipmentVM.CustomersId;
-            shipment.StatusId = shipmentVM.StatusId;
-            if (shipment == null || shipmentVM == null || shipmentVM.Shipment.MerchanId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            var shipment = _mapper.Map<Shipment>(shipmentVM);
+            if (shipment == null || shipmentVM == null || shipmentVM.MerchanId != User.FindFirstValue(ClaimTypes.NameIdentifier))
                 return View(shipmentVM);
             _unit.shipments.Update(shipment);
             _unit.Save();
@@ -143,12 +141,9 @@ namespace SahamProject.Web.Controllers
                     _context.Users.Where(a => a.Id == item.UserId).First()
                     );
             }
-            var shipmentVM = new ShipmentVM()
-            {
-                Shipment = new Shipment(),
-                Customers = new SelectList(users.ToList(), "Id", "Name"),
-                Status = new SelectList(_unit.status.GetAll(), "Id", "Name")
-            };
+            var shipmentVM = _mapper.Map<ShipmentVM>(new Shipment());
+            shipmentVM.Customers = new SelectList(users.ToList(), "Id", "Name");
+            shipmentVM.Status = new SelectList(_unit.status.GetAll(), "Id", "Name");
 
             return View(shipmentVM);
         }
@@ -157,15 +152,10 @@ namespace SahamProject.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(ShipmentVM shipmentVM)
         {
-            var shipment = new Shipment();
-            shipment = shipmentVM.Shipment;
+            var shipment = _mapper.Map<Shipment>(shipmentVM);
             shipment.MerchanId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            shipment.StatusId = shipmentVM.StatusId;
-            shipment.CustomerId = shipmentVM.CustomersId;
-            var result = _unit.shipments.GetFirstOrDeafult(x =>
-                x.OrderNumber.ToLower() == shipmentVM.Shipment.OrderNumber.ToString().ToLower(),
-                null, false);
-            if (shipment == null || result != null)
+            
+            if (!ModelState.IsValid)
             {
                 var customerRole = _context.Roles.FirstOrDefault(a => a.Name == SD.Role_Customer);
                 var userRoles = _context.UserRoles.Where(x => x.RoleId == customerRole.Id).ToList();
