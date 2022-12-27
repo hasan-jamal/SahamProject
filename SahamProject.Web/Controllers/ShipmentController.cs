@@ -130,7 +130,6 @@ namespace SahamProject.Web.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = SD.Role_Merchant)]
         public IActionResult Create()
         {
             var customerRole = _context.Roles.FirstOrDefault(a => a.Name == SD.Role_Customer);
@@ -149,7 +148,6 @@ namespace SahamProject.Web.Controllers
             return View(shipmentVM);
         }
         [HttpPost]
-        [Authorize(Roles = SD.Role_Merchant)]
         [ValidateAntiForgeryToken]
         public IActionResult Create(ShipmentVM shipmentVM)
         {

@@ -27,7 +27,6 @@ namespace SahamProject.Web.Controllers
         } 
 
         [HttpGet]
-        [Authorize(Roles = $"{SD.Role_Merchant},{SD.Role_Admin}")]
         public async Task<IActionResult> Index()
         {
             var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -51,7 +50,6 @@ namespace SahamProject.Web.Controllers
             return View(result);
         }
         [HttpGet]
-        [Authorize(Roles = $"{SD.Role_Merchant},{SD.Role_Admin}")]
         public async Task<IActionResult> Update(int id)
         {
             var shipmentProducts = _unit.shipmentsProducts.
@@ -82,7 +80,6 @@ namespace SahamProject.Web.Controllers
             return View(shpmentProductVM);
         }
         [HttpPost]
-        [Authorize(Roles = $"{SD.Role_Merchant},{SD.Role_Admin}")]
         [ValidateAntiForgeryToken]
         public IActionResult Update(ShpmentProductVM shpmentProductVM)
         {
@@ -97,7 +94,6 @@ namespace SahamProject.Web.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = $"{SD.Role_Merchant},{SD.Role_Admin}")]
         public async Task<IActionResult> Create()
         {
             var merchantId = User.
@@ -126,7 +122,6 @@ namespace SahamProject.Web.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = $"{SD.Role_Merchant},{SD.Role_Admin}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ShpmentProductVM shpmentProductVM)
         {
@@ -162,7 +157,6 @@ namespace SahamProject.Web.Controllers
 
 
         [HttpGet]
-        [Authorize(Roles = $"{SD.Role_Merchant},{SD.Role_Admin}")]
         public IActionResult Delete(int? id)
         {
             if (id == 0 && id == null)
@@ -179,7 +173,6 @@ namespace SahamProject.Web.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        [Authorize(Roles = $"{SD.Role_Merchant},{SD.Role_Admin}")]
         [ValidateAntiForgeryToken]
         public IActionResult DeletePost(int? id)
         {
