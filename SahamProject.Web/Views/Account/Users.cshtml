@@ -3,10 +3,20 @@
 @{
     ViewData["Title"] = "list of all users";
     Layout = "~/Views/Shared/_dashboard.cshtml";
-
+    var listOfRole = new string[] { SD.Role_Admin, SD.Role_Customer, SD.Role_Merchant };
 }
 
 <h1 class="h1-header mt-5">Users List</h1>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+            @foreach (var item in listOfRole)
+            {
+                <a class="btn btn-outline-success" asp-action="Users" asp-route-filter="@item">@item</a>
+            }
+                </div>
+        </div>
+    </div>
 <div class="container">
 <div class="row">
     <div class="col-md-12">
@@ -41,4 +51,5 @@
   
 </div>
 
+</div>
 </div>
