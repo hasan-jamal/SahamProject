@@ -59,11 +59,14 @@
                 <p><b>Shipment Type: </b> ${data.shipmentTypeId}</p>
             </div>
         </div>
+           <h5 class="alert alert-success font font-weight-bold">Shipment Products</h5>
         `;
 
         result.innerHTML += 
         data.shipmentsProducts.map(el => 
-            `<table class="table table-bordered. text-left table-font">
+            `
+            <div class="overflow-auto">
+            <table class="table table-bordered text-left table-font">
             <thead>
             <tr><th>width</th>
             <th>weight</th>
@@ -81,8 +84,9 @@
             <td>${el.height}</td></tr>
             </tbody>
             
-            </table>`)
-                    .join("\n");
+            </table>
+            </div>
+            `).join("\n");
     });
      });
  </script>

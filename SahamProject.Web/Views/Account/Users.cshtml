@@ -9,10 +9,10 @@
 <h1 class="h1-header mt-5">Users List</h1>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-6">
+            <div class="col-md-12">
             @foreach (var item in listOfRole)
             {
-                <a class="btn btn-outline-success" asp-action="Users" asp-route-filter="@item">@item</a>
+                <a class="btn btn-outline-primary mt-4" asp-action="Users" asp-route-filter="@item">@item</a>
             }
                 </div>
         </div>
@@ -25,6 +25,7 @@
                 List of all users
             </h4>
         </p>
+        <div class="overflow-auto">
         <table class="table">
             <thead>
                 <tr class="text-center">
@@ -48,7 +49,7 @@
                 }
             </tbody>
         </table>
-  
+  </div>
 </div>
 
 </div>

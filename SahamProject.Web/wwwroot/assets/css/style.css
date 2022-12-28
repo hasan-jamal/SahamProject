@@ -823,22 +823,51 @@ background-color:#ebebeb;
     font-family:'Cairo';
 }
 @media (max-width:1000px) {
-    .flex-footer{
-    flex-direction: column;
-  }
-  .about-info {
-    padding: 0px;
-  }
-  .container-padding{
-    padding: 20px 10px;
-  }
-  .row-padd{
-    padding: 30px;
-   }
-   .flex-col{
-    flex-direction: column;
-   }
+    .flex-footer {
+        flex-direction: column;
+    }
+
+    .about-info {
+        padding: 0px;
+    }
+
+    .container-padding {
+        padding: 20px 10px;
+    }
+
+    .row-padd {
+        padding: 30px;
+    }
+
+    .flex-col {
+        flex-direction: column;
+    }
+
     .image-style {
         width: 90%;
+    }
+
+    .section-1 img {
+        height: 50vh;
+    }
+    .section-2 img {
+        width: 90%;
+        height: 40vh;
+    }
+    .images-size h5 {
+        font-size: 25px;
+    }
+    .card-div p{
+        font-size:1rem;
+    }
+    .div-abs h1 {
+        font-size: 34px;
+    }
+    .div-abs .img-logo {
+        width: 60px !important;
+        height: 60px !important;
+    }
+    .section-1 .div-abs{
+        right:5%;
     }
 }

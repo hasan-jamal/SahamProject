@@ -8,9 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using SahamProject.Web.Models;
 using SahamProject.Web.Utlity;
 using SahamProject.Web.ViewModels;
-using System;
-using System.Diagnostics;
-using System.Security.Claims;
 
 namespace SahamProject.Web.Controllers
 {
@@ -47,7 +44,6 @@ namespace SahamProject.Web.Controllers
                 var usersRoles = await _userManager.GetUsersInRoleAsync(filter);
                 return View(usersRoles.ToList());
             }
-
             return View(await _context.Users.ToListAsync());
         }
 
@@ -153,7 +149,12 @@ namespace SahamProject.Web.Controllers
 
             var rseultRole = await _userManager.AddToRoleAsync(newuser, SD.Role_Customer);
             if (!rseultRole.Succeeded)
+            {
+                TempData["Error"] = "Wrong credentials. please try again!";
                 return View(registerVM);
+            }
+             
+            TempData["success"] = "You will be added as a merchant from the Admin";
             return RedirectToAction(nameof(Index));
         }
 
