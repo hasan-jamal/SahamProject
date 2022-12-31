@@ -181,6 +181,8 @@ a{
     -ms-flex-direction: column;
     flex-direction: column;
     direction: ltr;
+    list-style: none;
+    padding-inline-start: 0px;
 }
 
 
@@ -465,13 +467,12 @@ input{
     height:45px !important;
 }
 .btn-primary{
-        background-color: #00586D !important ;
-        border-color: #00586D !important;
+    background-color: #00586D !important ;
+    border-color: #00586D !important;
 }
-     .h1-header {
+.h1-header {
     font-size: 25px;
     width: 300px;
-
     background-color: #00586D;
     color: white;
     display: block;
@@ -497,15 +498,13 @@ thead th{
 .width-side{
     width:50%;
 }
-       .container-login .texts {
-            font-family: 'Cairo';
-            height: 80vh ;
-            border-radius: 10px;
-           overflow: hidden;
+.container-login .texts {
+    font-family: 'Cairo';
+    height: 80vh ;
+    border-radius: 10px;
+    overflow: hidden;
 
-        }
-
-
+}
 @media (max-width:1000px){
     .flex-elem {
         width: 100%;
@@ -535,7 +534,6 @@ thead th{
     .flex-co{
        flex-direction: column !important;
     }
- 
 }
 
 .header-text{

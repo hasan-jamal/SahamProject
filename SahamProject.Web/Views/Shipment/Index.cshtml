@@ -3,14 +3,24 @@
 @{
     ViewBag.Title = "Table Shipment";
     Layout = "~/Views/Shared/_dashboard.cshtml";
+    var listOfStatus = new string[] { "Begin", "InPrgoress", "Done" };
 }
                                          
    <h1 class="h1-header mt-5"> Table Shipment</h1>
-
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+            @foreach (var item in listOfStatus)
+            {
+                <a class="btn btn-outline-primary mt-4" asp-action="Index" asp-route-filter="@item">@item</a>
+            }
+                </div>
+        </div>
+    </div>
      
-        <div class="container text-home row-form">
+        <div class="container row-form">
                 <a asp-controller="Shipment" asp-action="Create" class="btn btn-success mt-3">Add Shipment</a>
-          <div class="overflow-auto">
+         <div class="overflow-auto">
             <table
                 class="table table-hover table-striped table-design overflow-auto pt-5 mt-5 table-bordered  mb-5"
                 style="vertical-align: middle; text-align: center;">

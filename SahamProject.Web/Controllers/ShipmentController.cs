@@ -75,22 +75,46 @@ namespace SahamProject.Web.Controllers
 
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string? filter)
         {
             var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var result = new List<Shipment>();
+            var result = _unit.shipments.GetAll(null, "Customer,Merchan,Status,ShipmentsProducts").ToList();
+
             if (User.IsInRole(SD.Role_Admin))
             {
-                result = _unit.shipments.
-                         GetAll(null, "Customer,Merchan,Status,ShipmentsProducts").ToList();
+                if (filter != null)
+                {
+                    result = _unit.shipments.
+                         GetAll(null, "Customer,Merchan,Status,ShipmentsProducts")
+                         .Where(x => x.Status.Name == filter).ToList();
+                    return View(result);
+                }
+                else
+                {
+                    result = _unit.shipments.
+                       GetAll(null, "Customer,Merchan,Status,ShipmentsProducts").ToList();
+                    return View(result);
+                }
             }
             else
             {
-                result =
+                if (filter != null)
+                {
+                    result =
+                        _unit.shipments.GetAll(a =>
+                        a.MerchanId == user, "Customer,Merchan,Status,ShipmentsProducts")
+                        .Where(x => x.Status.Name == filter).ToList();
+                    return View(result);
+                }
+                else
+                {
+                    result =
                         _unit.shipments.GetAll(a =>
                         a.MerchanId == user, "Customer,Merchan,Status,ShipmentsProducts").ToList();
+                    return View(result);
+
+                }
             }
-            return View(result);
         }
         [HttpGet]
         public IActionResult Update(int id)

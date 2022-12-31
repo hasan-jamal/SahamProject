@@ -5,9 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@ViewBag.Title - Saham</title>
-       <link rel="icon" href="~/assets/images/logo.png">
+    <link rel="icon" href="~/assets/images/logo.png">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
-        type="text/css">
+          type="text/css">
     <link href='https://fonts.googleapis.com/css?family=Cairo' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="~/assetsDashBoard/css/style.css">
@@ -18,8 +18,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
-     <!--Toastr  CSS---->
-   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <!--Toastr  CSS---->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
 </head>
 
@@ -36,44 +36,57 @@
                 </a>
 
             </header>
-            <nav class="dashboard-nav-list">
-                <a asp-controller="Home" asp-action="Index" class="dashboard-nav-item ">
-                    <i class="fas fa-home"></i>
-                    Home Page
-                </a>
-                <a asp-controller="Shipment" asp-action="Index" class="dashboard-nav-item  ">
-                    <i class="fa-solid fa-walkie-talkie"></i>
-                    Shipment Component
-                </a>
-                <a asp-controller="ShipmentsProduct" asp-action="Index" class="dashboard-nav-item  ">
-                    <i class="fa-solid fa-walkie-talkie"></i>
-                    Shipments Products Component
-                </a>
+            <ul class="dashboard-nav-list">
+                <li>
+                    <a asp-controller="Home" asp-action="Index" class="dashboard-nav-item ">
+                        <i class="fas fa-home"></i>
+                        Home Page
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="Shipment" asp-action="Index" class="dashboard-nav-item  ">
+                        <i class="fa-solid fa-walkie-talkie"></i>
+                        Shipment Component
+                    </a>
+                </li>
+                <li>
+                    <a asp-controller="ShipmentsProduct" asp-action="Index" class="dashboard-nav-item  ">
+                        <i class="fa-solid fa-walkie-talkie"></i>
+                        Shipments Products Component
+                    </a>
+                </li>
+
                 @if (User.Identity.IsAuthenticated && User.IsInRole(SD.Role_Admin))
                 {
-                    <a asp-controller="Service" asp-action="Index" class="dashboard-nav-item  ">
-                        <i class="fa-solid fa-walkie-talkie"></i>
-                        Services Component
-                    </a>
-                    <a asp-controller="Contacts" asp-action="Index" class="dashboard-nav-item">
-                        <i class="fa-solid fa-walkie-talkie"></i>
-                        Contacts Components
-                    </a>
-                    <a asp-controller="Account" asp-action="Users" class="dashboard-nav-item  ">
-                        <i class="fa-solid fa-walkie-talkie"></i>
-                        Users Component
-                    </a>
-
+                    <li>
+                        <a is-active-route asp-controller="Service" asp-action="Index" class="dashboard-nav-item  ">
+                            <i class="fa-solid fa-walkie-talkie"></i>
+                            Services Component
+                        </a>
+                    </li>
+                    <li>
+                        <a is-active-route asp-controller="Contacts" asp-action="Index" class="dashboard-nav-item">
+                            <i class="fa-solid fa-walkie-talkie"></i>
+                            Contacts Components
+                        </a>
+                    </li>
+                    <li>
+                        <a is-active-route asp-controller="Account" asp-action="Users" class="dashboard-nav-item  ">
+                            <i class="fa-solid fa-walkie-talkie"></i>
+                            Users Component
+                        </a>
+                    </li>
                 }
-               
-                <div class="nav-item-divider"></div>
-                <form asp-controller="Account" asp-action="Logout">
-                    <button type="submit" class="dashboard-nav-item bg-none">
-                     <i class="fas fa-sign-out-alt"></i> Logout 
-                    </button>
-                 </form>
 
-            </nav>
+                <li><div class="nav-item-divider"></div> </li>
+                <li>
+                    <form asp-controller="Account" asp-action="Logout">
+                        <button type="submit" class="dashboard-nav-item bg-none">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </form>
+                </li>
+            </ul>
 
         </div>
 
@@ -81,24 +94,25 @@
             <header class='dashboard-toolbar'>
                 <div class="d-flex justify-content-between align-items-center flex-elem">
                     <a href="#!" class="menu-toggle"><i class="fas fa-bars"></i></a>
-                  <h1 class="h1-design d-block "><img src="~/assets/images/profile.png" alt="" width="40"
-                            class="img-design mx-2"> Hello @userManager.GetUserAsync(User).Result.Name
+                    <h1 class="h1-design d-block ">
+                        <img src="~/assets/images/profile.png" alt="" width="40"
+                             class="img-design mx-2"> Hello @userManager.GetUserAsync(User).Result.Name
                     </h1>
                 </div>
             </header>
 
             <div class='dashboard-content mt-5'>
-                   <partial name="~/Views/Shared/_Notification.cshtml" />
-                   @RenderBody()
-                </div>
+                <partial name="~/Views/Shared/_Notification.cshtml" />
+                @RenderBody()
             </div>
-            <div class="footer">
-                <div class="wrapper">
-                    <p class="text-center"></p>
-                </div>
-            </div>
-
         </div>
+        <div class="footer">
+            <div class="wrapper">
+                <p class="text-center"></p>
+            </div>
+        </div>
+
+    </div>
     </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -108,11 +122,18 @@
         <div id="content-wrap">
             <!-- all other page content -->
         </div>
-        <footer id="footer">© 2022
+        <footer id="footer">
+            © 2022
             Saham
         </footer>
     </div>
-     
+    <script>
+        $(document).ready(function(){
+             $('.dashboard-nav-list').find('[href="'+window.location.pathname+'"]').parent().addClass('dashboard-back');
+        });
+
+    </script>
+
     <!-- font -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
@@ -120,12 +141,12 @@
     <!-- ionicons -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-     <!--Toastr  JS---->
+    <!--Toastr  JS---->
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- icon i -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-     @await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 
 </html>
