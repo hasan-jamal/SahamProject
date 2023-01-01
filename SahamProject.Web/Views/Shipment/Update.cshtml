@@ -6,6 +6,7 @@
 
         <h1 class="h1-header mt-5"> Update Shipment</h1>
                 <div class="container text-home">
+                    <div class="text-danger" asp-validation-summary="All"></div>
                     <form asp-action="Update" method="post" role="form">
                         <input hidden asp-for="@Model.Id"/>
                         <div class="row">

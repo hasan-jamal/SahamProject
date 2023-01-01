@@ -145,7 +145,24 @@ namespace SahamProject.Web.Controllers
         {
             var shipment = _mapper.Map<Shipment>(shipmentVM);
             if (!ModelState.IsValid || shipmentVM.MerchanId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            {
+                shipment = _unit.shipments.
+                GetFirstOrDeafult(a => a.Id == shipmentVM.Id, "Customer,Merchan,Status,ShipmentsProducts", false);
+                var customerRole = _context.Roles.
+                    FirstOrDefault(a => a.Name == SD.Role_Customer);
+                var userRoles = _context.UserRoles.
+                    Where(x => x.RoleId == customerRole!.Id).ToList();
+                var users = new List<ApplicationUser>();
+                foreach (var item in userRoles)
+                {
+                    users.Add(
+                        _context.Users.Where(a => a.Id == item.UserId).First()
+                        );
+                }
+                shipmentVM.Customers = new SelectList(users.ToList(), "Id", "Name", shipmentVM.CustomersId);
+                shipmentVM.Status = new SelectList(_unit.status.GetAll(), "Id", "Name", shipment.StatusId);
                 return View(shipmentVM);
+            }
             _unit.shipments.Update(shipment);
             _unit.Save();
             return RedirectToAction(nameof(Index));
