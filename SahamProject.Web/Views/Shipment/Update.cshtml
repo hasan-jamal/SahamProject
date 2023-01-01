@@ -1,4 +1,4 @@
-﻿@model ShipmentVM 
+﻿@model ShipmentUpdateVM 
 @{
     ViewBag.Title = "Update Shipment";
     Layout = "~/Views/Shared/_dashboard.cshtml";
@@ -28,13 +28,13 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label" asp-for="@Model.Customers"></label>
+                                    <label class="form-label" asp-for="@Model.CustomersId"></label>
                                     <select class="form-control"  asp-for="@Model.CustomersId" asp-items="@Model.Customers" ></select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-label" asp-for="@Model.Status"></label>
+                                    <label class="form-label" asp-for="@Model.StatusId"></label>
                                     <select asp-items="@Model.Status" class="form-control" asp-for="@Model.StatusId"></select>
                                 </div>
                             </div>

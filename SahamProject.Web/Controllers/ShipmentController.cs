@@ -132,19 +132,18 @@ namespace SahamProject.Web.Controllers
                     _context.Users.Where(a => a.Id == item.UserId).First()
                     );
             }
-            var shipmentVM = _mapper.Map<ShipmentVM>(shipment);
-            shipmentVM.Id = shipment.Id;
-            shipmentVM.Customers = new SelectList(users.ToList(), "Id", "Name", shipmentVM.CustomersId);
-            shipmentVM.Status = new SelectList(_unit.status.GetAll(), "Id", "Name", shipment.StatusId);
+            var shipmentVM = _mapper.Map<ShipmentUpdateVM>(shipment);
+            shipmentVM.Customers = new SelectList(users.ToList(), "Id", "Name");
+            shipmentVM.Status = new SelectList(_unit.status.GetAll(), "Id", "Name");
 
             return View(shipmentVM);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(ShipmentVM shipmentVM)
+        public IActionResult Update(ShipmentUpdateVM shipmentVM)
         {
             var shipment = _mapper.Map<Shipment>(shipmentVM);
-            if (!ModelState.IsValid || shipmentVM.MerchanId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+            if (!ModelState.IsValid || (shipmentVM.MerchanId != User.FindFirstValue(ClaimTypes.NameIdentifier) && !User.IsInRole(SD.Role_Admin)))
             {
                 shipment = _unit.shipments.
                 GetFirstOrDeafult(a => a.Id == shipmentVM.Id, "Customer,Merchan,Status,ShipmentsProducts", false);
@@ -159,8 +158,9 @@ namespace SahamProject.Web.Controllers
                         _context.Users.Where(a => a.Id == item.UserId).First()
                         );
                 }
+                shipmentVM.OrderNumber = shipment.OrderNumber;
                 shipmentVM.Customers = new SelectList(users.ToList(), "Id", "Name", shipmentVM.CustomersId);
-                shipmentVM.Status = new SelectList(_unit.status.GetAll(), "Id", "Name", shipment.StatusId);
+                shipmentVM.Status = new SelectList(_unit.status.GetAll(), "Id", "Name", shipmentVM.StatusId);
                 return View(shipmentVM);
             }
             _unit.shipments.Update(shipment);

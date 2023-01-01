@@ -15,6 +15,13 @@ namespace SahamProject.Web.Mapper
                  ForMember(x => x.Customers, a => a.Ignore()).
                  ForMember(x => x.Status, a => a.Ignore()).
                  ReverseMap();
+
+            CreateMap<Shipment, ShipmentUpdateVM>().
+                 ForMember(x => x.CustomersId, a => a.MapFrom(e => e.CustomerId)).
+                 ForMember(x => x.StatusId, a => a.MapFrom(e => e.StatusId)).
+                 ForMember(x => x.Customers, a => a.Ignore()).
+                 ForMember(x => x.Status, a => a.Ignore()).
+                 ReverseMap();
             #endregion
 
             #region ApplicationUsers
