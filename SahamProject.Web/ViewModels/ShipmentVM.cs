@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Build.Framework;
 using SahamProject.Web.Extensions;
 using SahamProject.Web.Models;
@@ -15,8 +16,10 @@ namespace SahamProject.Web.ViewModels
         [OrderNumberExist(ErrorMessage = "Already Exist")]
         public string OrderNumber { get; set; }
         public string ShipmentTypeId { get; set; } = string.Empty;
+        [ValidateNever]
         public IEnumerable<SelectListItem>? Customers { get; set; }
         public string? CustomersId { get; set; }
+        [ValidateNever]
         public IEnumerable<SelectListItem>? Status { get; set; }
         public int StatusId { get; set; }
     }

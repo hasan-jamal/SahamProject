@@ -84,7 +84,6 @@ namespace SahamProject.Web.Controllers
         public IActionResult Update(ShpmentProductVM shpmentProductVM)
         {
             var shipmentProduct = _mapper.Map<ShipmentsProduct>(shpmentProductVM);
-
             if (!ModelState.IsValid)
                 return View(shpmentProductVM);
             

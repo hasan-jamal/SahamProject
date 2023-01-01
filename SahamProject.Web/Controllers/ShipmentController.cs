@@ -141,10 +141,8 @@ namespace SahamProject.Web.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = SD.Role_Merchant)]
         public IActionResult Update(ShipmentVM shipmentVM)
         {
-
             var shipment = _mapper.Map<Shipment>(shipmentVM);
             if (!ModelState.IsValid || shipmentVM.MerchanId != User.FindFirstValue(ClaimTypes.NameIdentifier))
                 return View(shipmentVM);
@@ -201,7 +199,6 @@ namespace SahamProject.Web.Controllers
 
 
         [HttpGet]
-
         public IActionResult Delete(int? id)
         {
             if (id == 0 && id == null)
