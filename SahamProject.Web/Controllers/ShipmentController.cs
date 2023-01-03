@@ -20,7 +20,9 @@ namespace SahamProject.Web.Controllers
         private readonly SahamProjectContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
-        public ShipmentController(IMapper mapper,IUnitOfWork unit, UserManager<ApplicationUser> userManager, SahamProjectContext context)
+        public ShipmentController(IMapper mapper,IUnitOfWork unit,
+            UserManager<ApplicationUser> userManager, 
+            SahamProjectContext context)
         {
             _unit = unit;
             _userManager = userManager;
@@ -117,24 +119,18 @@ namespace SahamProject.Web.Controllers
             }
         }
         [HttpGet]
-        public IActionResult Update(int id)
+        public async Task<IActionResult> Update(int id)
         {
             var shipment = _unit.shipments.
                 GetFirstOrDeafult(a => a.Id == id, "Customer,Merchan,Status,ShipmentsProducts", false);
-            var customerRole = _context.Roles.
-                FirstOrDefault(a => a.Name == SD.Role_Customer);
-            var userRoles = _context.UserRoles.
-                Where(x => x.RoleId == customerRole!.Id).ToList();
-            var users = new List<ApplicationUser>();
-            foreach (var item in userRoles)
-            {
-                users.Add(
-                    _context.Users.Where(a => a.Id == item.UserId).First()
-                    );
-            }
+            if(!User.IsInRole(SD.Role_Admin) && shipment.MerchanId != User.FindFirstValue(ClaimTypes.NameIdentifier))
+                return RedirectToAction(nameof(Index));
+            
+            var users = await _userManager.GetUsersInRoleAsync(SD.Role_Customer);
+            
             var shipmentVM = _mapper.Map<ShipmentUpdateVM>(shipment);
-            shipmentVM.Customers = new SelectList(users.ToList(), "Id", "Name");
-            shipmentVM.Status = new SelectList(_unit.status.GetAll(), "Id", "Name");
+            shipmentVM.Customers = new SelectList(users.ToList(), "Id", "Name", shipment.CustomerId);
+            shipmentVM.Status = new SelectList(_unit.status.GetAll(), "Id", "Name", shipment.StatusId);
 
             return View(shipmentVM);
         }
@@ -170,11 +166,17 @@ namespace SahamProject.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(ShipmentUpdateVM shipmentVM)
+        public async Task<IActionResult> Update(ShipmentUpdateVM shipmentVM)
         {
             var shipmentPro = _mapper.Map<Shipment>(shipmentVM);
             if (!ModelState.IsValid)
+            {
+                var users = await _userManager.GetUsersInRoleAsync(SD.Role_Customer);
+                shipmentVM.Customers = new SelectList(users.ToList(), "Id", "Name", shipmentVM.CustomersId);
+                shipmentVM.Status = new SelectList(_unit.status.GetAll(), "Id", "Name", shipmentVM.StatusId);
+
                 return View(shipmentVM);
+            }
 
             TempData["success"] = " Update Shipment is successfully";
             _unit.shipments.Update(shipmentPro);

@@ -20,7 +20,8 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label" asp-for="@Model.OrderNumber"></label>
-                                    <input type="text" asp-for="@Model.OrderNumber" class="form-control" placeholder="Add order number">
+                                    <input disabled type="text" asp-for="@Model.OrderNumber" class="form-control" placeholder="Add order number">
+                                    <input hidden type="text" asp-for="@Model.OrderNumber" class="form-control" placeholder="Add order number">
                                     <span asp-validation-for="@Model.OrderNumber" class="text-danger"></span>
                                 </div>
                             </div>
