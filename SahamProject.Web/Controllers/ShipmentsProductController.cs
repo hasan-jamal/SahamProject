@@ -85,8 +85,10 @@ namespace SahamProject.Web.Controllers
         {
             var shipmentProduct = _mapper.Map<ShipmentsProduct>(shpmentProductVM);
             if (!ModelState.IsValid)
+                TempData["error"] = " Update Shipment Product is Faild";
                 return View(shpmentProductVM);
-            
+
+            TempData["success"] = " Update Shipment Product is successfully";
             _unit.shipmentsProducts.Update(shipmentProduct);
             _unit.Save();
             return RedirectToAction(nameof(Index));
@@ -146,9 +148,10 @@ namespace SahamProject.Web.Controllers
                             a.MerchanId == user).ToList();
                 }
                 shpmentProductVM.Shipments = new SelectList(result, "Id", "OrderNumber");
+                TempData["error"] = " Create Shipment Product is Faild !!";
                 return View(shpmentProductVM);
             }
-
+            TempData["success"] = " Create Shipment Product is successfully";
             _unit.shipmentsProducts.Add(shipmentProduct);
             _unit.Save();
             return RedirectToAction(nameof(Index));

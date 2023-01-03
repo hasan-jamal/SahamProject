@@ -18,12 +18,14 @@
                                 <div class="form-group">
                                     <label class="form-label" asp-for="@Model.Price"></label>
                                     <input type="text" asp-for="@Model.Price" class="form-control" placeholder="Add price">
+                                    <span asp-validation-for="@Model.Price" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label" asp-for="@Model.OrderNumber"></label>
                                     <input type="text" asp-for="@Model.OrderNumber" class="form-control" placeholder="Add order number">
+                                    <span asp-validation-for="@Model.OrderNumber" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -42,6 +44,7 @@
                                 <div class="form-group">
                                     <label class="form-label" asp-for="@Model.ShipmentTypeId">Shipment Type Id</label>
                                     <input type="text" asp-for="@Model.ShipmentTypeId" class="form-control" placeholder="Add shipment type Id">
+                                    <span asp-validation-for="@Model.ShipmentTypeId" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-12 mt-4">

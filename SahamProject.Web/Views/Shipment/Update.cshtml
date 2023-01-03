@@ -3,27 +3,25 @@
     ViewBag.Title = "Update Shipment";
     Layout = "~/Views/Shared/_dashboard.cshtml";
 }
-
         <h1 class="h1-header mt-5"> Update Shipment</h1>
                 <div class="container text-home">
                     <div class="text-danger" asp-validation-summary="All"></div>
                     <form asp-action="Update" method="post" role="form">
                         <input hidden asp-for="@Model.Id"/>
+                        <input hidden asp-for="@Model.MerchanId"/>
                         <div class="row">
-                            <input hidden asp-for="@Model.MerchanId"/>
-                            <input hidden asp-for="@Model.StatusId"/>
-                            <input hidden asp-for="@Model.CustomersId"/>
-
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label" asp-for="@Model.Price"></label>
                                     <input type="text" asp-for="@Model.Price" class="form-control" placeholder="Add price">
+                                    <span asp-validation-for="@Model.Price" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="form-label" asp-for="@Model.OrderNumber"></label>
                                     <input type="text" asp-for="@Model.OrderNumber" class="form-control" placeholder="Add order number">
+                                    <span asp-validation-for="@Model.OrderNumber" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -42,6 +40,7 @@
                                 <div class="form-group">
                                     <label class="form-label" asp-for="@Model .ShipmentTypeId">Shipment Type Id</label>
                                     <input type="text" asp-for="@Model.ShipmentTypeId" class="form-control" placeholder="Add shipment type Id">
+                                    <span asp-validation-for="@Model.ShipmentTypeId" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-12 mt-4">

@@ -138,35 +138,50 @@ namespace SahamProject.Web.Controllers
 
             return View(shipmentVM);
         }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult Update(ShipmentUpdateVM shipmentVM)
+        //{
+        //    var shipment = _mapper.Map<Shipment>(shipmentVM);
+        //    if (!ModelState.IsValid || (shipmentVM.MerchanId != User.FindFirstValue(ClaimTypes.NameIdentifier) && !User.IsInRole(SD.Role_Admin)))
+        //    {
+        //        shipment = _unit.shipments.
+        //        GetFirstOrDeafult(a => a.Id == shipmentVM.Id, "Customer,Merchan,Status,ShipmentsProducts", false);
+        //        var customerRole = _context.Roles.
+        //            FirstOrDefault(a => a.Name == SD.Role_Customer);
+        //        var userRoles = _context.UserRoles.
+        //            Where(x => x.RoleId == customerRole!.Id).ToList();
+        //        var users = new List<ApplicationUser>();
+        //        foreach (var item in userRoles)
+        //        {
+        //            users.Add(
+        //                _context.Users.Where(a => a.Id == item.UserId).First()
+        //                );
+        //        }
+        //        shipmentVM.OrderNumber = shipment.OrderNumber;
+        //        shipmentVM.Customers = new SelectList(users.ToList(), "Id", "Name", shipmentVM.CustomersId);
+        //        shipmentVM.Status = new SelectList(_unit.status.GetAll(), "Id", "Name", shipmentVM.StatusId);
+        //        return View(shipmentVM);
+        //    }
+        //    _unit.shipments.Update(shipment);
+        //    _unit.Save();
+        //    return RedirectToAction(nameof(Index));
+        //}
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Update(ShipmentUpdateVM shipmentVM)
         {
-            var shipment = _mapper.Map<Shipment>(shipmentVM);
-            if (!ModelState.IsValid || (shipmentVM.MerchanId != User.FindFirstValue(ClaimTypes.NameIdentifier) && !User.IsInRole(SD.Role_Admin)))
-            {
-                shipment = _unit.shipments.
-                GetFirstOrDeafult(a => a.Id == shipmentVM.Id, "Customer,Merchan,Status,ShipmentsProducts", false);
-                var customerRole = _context.Roles.
-                    FirstOrDefault(a => a.Name == SD.Role_Customer);
-                var userRoles = _context.UserRoles.
-                    Where(x => x.RoleId == customerRole!.Id).ToList();
-                var users = new List<ApplicationUser>();
-                foreach (var item in userRoles)
-                {
-                    users.Add(
-                        _context.Users.Where(a => a.Id == item.UserId).First()
-                        );
-                }
-                shipmentVM.OrderNumber = shipment.OrderNumber;
-                shipmentVM.Customers = new SelectList(users.ToList(), "Id", "Name", shipmentVM.CustomersId);
-                shipmentVM.Status = new SelectList(_unit.status.GetAll(), "Id", "Name", shipmentVM.StatusId);
+            var shipmentPro = _mapper.Map<Shipment>(shipmentVM);
+            if (!ModelState.IsValid)
                 return View(shipmentVM);
-            }
-            _unit.shipments.Update(shipment);
+
+            TempData["success"] = " Update Shipment is successfully";
+            _unit.shipments.Update(shipmentPro);
             _unit.Save();
             return RedirectToAction(nameof(Index));
         }
+
 
         [HttpGet]
         public IActionResult Create()
@@ -209,6 +224,7 @@ namespace SahamProject.Web.Controllers
 
                 return View(shipmentVM);
             }
+            TempData["success"] = " Create Shipment is successfully";
             _unit.shipments.Add(shipment);
             _unit.Save();
             return RedirectToAction(nameof(Index));
@@ -241,7 +257,7 @@ namespace SahamProject.Web.Controllers
             }
             _unit.shipments.Remove(shipment);
             _unit.Save();
-            TempData["success"] = "Delete contacts is successfully";
+            TempData["success"] = "Delete Shipment is successfully";
             return RedirectToAction("Index");
         }
     }
