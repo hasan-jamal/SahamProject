@@ -92,7 +92,7 @@ namespace SahamProject.Web.Controllers
         }
         public IActionResult Index() 
         {
-            if (User.Identity.IsAuthenticated) return RedirectToAction("Home","Index");
+            if (User.Identity!.IsAuthenticated) return RedirectToAction("Home","Index");
             
             return View(new LoginVM());
         }

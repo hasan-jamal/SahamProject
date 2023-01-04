@@ -169,7 +169,7 @@ namespace SahamProject.Web.Migrations
 
                     b.HasKey("UserId", "RoleId");
 
-                    b.ToTable("IdentityUserRole<Guid>");
+                    b.ToTable("IdentityUserRole<Guid>", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -317,7 +317,7 @@ namespace SahamProject.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Contacts");
+                    b.ToTable("Contacts", (string)null);
                 });
 
             modelBuilder.Entity("SahamProject.Web.Models.Service", b =>
@@ -339,7 +339,7 @@ namespace SahamProject.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Services");
+                    b.ToTable("Services", (string)null);
                 });
 
             modelBuilder.Entity("SahamProject.Web.Models.Shipment", b =>
@@ -378,7 +378,7 @@ namespace SahamProject.Web.Migrations
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("Shipments");
+                    b.ToTable("Shipments", (string)null);
                 });
 
             modelBuilder.Entity("SahamProject.Web.Models.ShipmentsProduct", b =>
@@ -414,7 +414,7 @@ namespace SahamProject.Web.Migrations
 
                     b.HasIndex("ShipmentId");
 
-                    b.ToTable("ShipmentsProducts");
+                    b.ToTable("ShipmentsProducts", (string)null);
                 });
 
             modelBuilder.Entity("SahamProject.Web.Models.Status", b =>
@@ -430,7 +430,7 @@ namespace SahamProject.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Statuses");
+                    b.ToTable("Statuses", (string)null);
 
                     b.HasData(
                         new

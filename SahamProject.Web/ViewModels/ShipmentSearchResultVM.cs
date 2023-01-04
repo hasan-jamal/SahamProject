@@ -14,10 +14,10 @@
     public class ShipmentsProductSearchVM
     {
         public string? Description { get; set; }
-        public string? Width { get; set; }
-        public string? SPLength { get; set; }
-        public string? Height { get; set; }
-        public string? Weight { get; set; }
+        public decimal? Width { get; set; }
+        public decimal? SPLength { get; set; }
+        public decimal? Height { get; set; }
+        public decimal? Weight { get; set; }
         public bool? IsBreakable { get; set; }
     }
 }

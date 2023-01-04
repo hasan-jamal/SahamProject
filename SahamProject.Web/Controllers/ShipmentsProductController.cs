@@ -81,12 +81,33 @@ namespace SahamProject.Web.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(ShpmentProductVM shpmentProductVM)
+        public async Task<IActionResult> Update(ShpmentProductVM shpmentProductVM)
         {
             var shipmentProduct = _mapper.Map<ShipmentsProduct>(shpmentProductVM);
             if (!ModelState.IsValid)
-                TempData["error"] = " Update Shipment Product is Faild";
+            {
+                var result = new List<Shipment>();
+                var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var currentUser = await _userManager.
+                                    FindByEmailAsync(User.
+                                        FindFirstValue(ClaimTypes.Email));
+                if (await _userManager.IsInRoleAsync(currentUser,
+                    SD.Role_Admin))
+                {
+                    result = _unit.shipments.
+                             GetAll().ToList();
+                }
+                else
+                {
+                    result =
+                            _unit.shipments.GetAll(a =>
+                            a.MerchanId == user).ToList();
+                }
+
+                shpmentProductVM.Shipments = new SelectList(result, "Id", "OrderNumber");
+                TempData["error"] = " Create Shipment Product is Faild !!";
                 return View(shpmentProductVM);
+            }
 
             TempData["success"] = " Update Shipment Product is successfully";
             _unit.shipmentsProducts.Update(shipmentProduct);
@@ -151,6 +172,7 @@ namespace SahamProject.Web.Controllers
                 TempData["error"] = " Create Shipment Product is Faild !!";
                 return View(shpmentProductVM);
             }
+            
             TempData["success"] = " Create Shipment Product is successfully";
             _unit.shipmentsProducts.Add(shipmentProduct);
             _unit.Save();

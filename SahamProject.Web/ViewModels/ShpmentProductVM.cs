@@ -12,16 +12,20 @@ namespace SahamProject.Web.ViewModels
         public string Description { get; set; }
         [Display(Name = "Width")]
         [Required(ErrorMessage = "Width Is Required")]
-        public string Width { get; set; }
+        [Range(1,10000, ErrorMessage = "Shold be Between 1 - 10000")]
+        public decimal Width { get; set; }
+        [Range(1,10000, ErrorMessage = "Shold be Between 1 - 10000")]
         [Display(Name = "Length")]
         [Required(ErrorMessage = "Length Is Required")]
-        public string Length { get; set; }
+        public decimal Length { get; set; }
+        [Range(1, 10000, ErrorMessage = "Shold be Between 1 - 10000")]
         [Display(Name = "Height")]
         [Required(ErrorMessage = "Height Is Required")]
-        public string Height { get; set; }
+        public decimal Height { get; set; }
         [Display(Name = "Weight")]
         [Required(ErrorMessage = "Weight Is Required")]
-        public string Weight { get; set; }
+        [Range(1, 10000, ErrorMessage = "Shold be Between 1 - 10000")]
+        public decimal Weight { get; set; }
         [Display(Name = "IsBreakable")]
         [Required(ErrorMessage = "IsBreakable Is Required")]
         public bool? IsBreakable { get; set; }
